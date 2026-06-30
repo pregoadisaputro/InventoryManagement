@@ -19,7 +19,6 @@ public record CreateProductResponse(
     int Stock,
     int MinimumStock,
     int CategoryId,
-    string CategoryName,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt
 );
