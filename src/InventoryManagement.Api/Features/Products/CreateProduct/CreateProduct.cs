@@ -13,15 +13,28 @@ public static class CreateProduct
             "/",
             async (CreateProductRequest request, AppDbContext db) =>
             {
-                var isProductExist = await db.Products.AnyAsync(p =>
-                    EF.Functions.ILike(p.Name, request.Name)
-                    || EF.Functions.ILike(p.Sku, request.Sku)
-                );
+                var existingProduct = await db
+                    .Products.AsNoTracking()
+                    .AnyAsync(p =>
+                        EF.Functions.ILike(p.Name, request.Name)
+                        || EF.Functions.ILike(p.Sku, request.Sku)
+                    );
 
-                if (isProductExist)
+                if (existingProduct)
                 {
                     return Results.BadRequest(
                         $"Product with Name {request.Name} or SKU {request.Sku} already exist."
+                    );
+                }
+
+                var existingCategory = await db
+                    .Categories.AsNoTracking()
+                    .FirstOrDefaultAsync(c => c.Id == request.CategoryId);
+
+                if (existingCategory is null)
+                {
+                    return Results.BadRequest(
+                        $"Category with ID {request.CategoryId} does not exist yet."
                     );
                 }
 
@@ -29,11 +42,11 @@ public static class CreateProduct
                 {
                     Name = request.Name,
                     Sku = request.Sku,
-                    Description = request.Description
+                    Description = request.Description,
                     Price = request.Price,
                     Stock = request.Stock,
                     MinimumStock = request.MinimumStock,
-                    CategoryId = request.CategoryId
+                    CategoryId = request.CategoryId,
                 };
 
                 db.Products.Add(newProduct);
@@ -43,17 +56,18 @@ public static class CreateProduct
                     ProductEndpointNames.GetProductById,
                     new { id = newProduct.Id },
                     new CreateProductResponse(
-                       newProduct.Id,
-                       newProduct.Name,
-                       newProduct.Sku,
-                       newProduct.Description,
-                       newProduct.Price,
-                       newProduct.Stock,
-                       newProduct.MinimumStock,
-                       newProduct.CategoryId,
-                       newProduct.Category.Name,
-                       newProduct.CreatedAt,
-                       newProduct.UpdatedAt));
+                        newProduct.Id,
+                        newProduct.Name,
+                        newProduct.Sku,
+                        newProduct.Description,
+                        newProduct.Price,
+                        newProduct.Stock,
+                        newProduct.MinimumStock,
+                        newProduct.CategoryId,
+                        newProduct.CreatedAt,
+                        newProduct.UpdatedAt
+                    )
+                );
             }
         );
     }
