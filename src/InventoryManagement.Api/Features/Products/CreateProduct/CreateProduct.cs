@@ -13,18 +13,22 @@ public static class CreateProduct
             "/",
             async (CreateProductRequest request, AppDbContext db) =>
             {
-                var existingProduct = await db
+                var existingProductName = await db
                     .Products.AsNoTracking()
-                    .AnyAsync(p =>
-                        EF.Functions.ILike(p.Name, request.Name)
-                        || EF.Functions.ILike(p.Sku, request.Sku)
-                    );
+                    .AnyAsync(p => EF.Functions.ILike(p.Name, request.Name));
 
-                if (existingProduct)
+                var existingProductSku = await db
+                    .Products.AsNoTracking()
+                    .AnyAsync(p => EF.Functions.ILike(p.Sku, request.Sku));
+
+                if (existingProductName)
                 {
-                    return Results.BadRequest(
-                        $"Product with Name {request.Name} or SKU {request.Sku} already exist."
-                    );
+                    return Results.BadRequest("A product with this name already exists.");
+                }
+
+                if (existingProductSku)
+                {
+                    return Results.BadRequest("A product with this SKU already exists.");
                 }
 
                 var existingCategory = await db
@@ -34,7 +38,7 @@ public static class CreateProduct
                 if (existingCategory is null)
                 {
                     return Results.BadRequest(
-                        $"Category with ID {request.CategoryId} does not exist yet."
+                        $"Category with ID {request.CategoryId} does not exist."
                     );
                 }
 
@@ -46,7 +50,7 @@ public static class CreateProduct
                     Price = request.Price,
                     Stock = request.Stock,
                     MinimumStock = request.MinimumStock,
-                    CategoryId = request.CategoryId,
+                    CategoryId = existingCategory.Id,
                 };
 
                 db.Products.Add(newProduct);
