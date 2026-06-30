@@ -11,5 +11,4 @@ public class InventoryTransaction
     public int ProductId { get; set; }
     public Product Product { get; set; } = null!;
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
-    public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
 }
