@@ -19,7 +19,7 @@ public static class GetCategoryById
 
                     if (existingCategory is null)
                     {
-                        return Results.BadRequest($"Category with ID {id} not exist.");
+                        return Results.NotFound($"Category with ID {id} not exist.");
                     }
 
                     return Results.Ok(

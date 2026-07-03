@@ -21,7 +21,7 @@ public static class GetProductById
 
                     if (existingProduct is null)
                     {
-                        return Results.BadRequest($"Product with ID {id} not exist.");
+                        return Results.NotFound($"Product with ID {id} not exist.");
                     }
 
                     return Results.Ok(
