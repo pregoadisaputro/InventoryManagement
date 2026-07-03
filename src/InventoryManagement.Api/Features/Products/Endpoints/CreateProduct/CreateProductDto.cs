@@ -1,4 +1,4 @@
-namespace InventoryManagement.Api.Features.Products.CreateProduct;
+namespace InventoryManagement.Api.Features.Products.Endpoints.CreateProduct;
 
 public record CreateProductRequest(
     string Name,

@@ -3,7 +3,7 @@ using InventoryManagement.Api.Data.Entity;
 using InventoryManagement.Api.Features.Products.Constant;
 using Microsoft.EntityFrameworkCore;
 
-namespace InventoryManagement.Api.Features.Products.CreateProduct;
+namespace InventoryManagement.Api.Features.Products.Endpoints.CreateProduct;
 
 public static class CreateProduct
 {
