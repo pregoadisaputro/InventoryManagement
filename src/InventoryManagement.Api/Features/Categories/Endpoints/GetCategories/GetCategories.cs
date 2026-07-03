@@ -1,4 +1,5 @@
 using InventoryManagement.Api.Data;
+using InventoryManagement.Api.Features.Categories.Constant;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Api.Features.Categories.Endpoints.GetCategories;
@@ -18,6 +19,7 @@ public static class GetCategories
                         .ToListAsync();
                 }
             )
+            .WithName(CategoryEndpointNames.GetCategory)
             .Produces<List<GetCategoriesResponse>>();
     }
 }

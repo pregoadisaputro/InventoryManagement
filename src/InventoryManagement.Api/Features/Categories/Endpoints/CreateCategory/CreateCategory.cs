@@ -24,6 +24,9 @@ public static class CreateCategory
 
                 var newCategory = new Category { Name = request.Name };
 
+                db.Categories.Add(newCategory);
+                await db.SaveChangesAsync();
+
                 return Results.CreatedAtRoute(
                     CategoryEndpointNames.GetCategory,
                     new { id = newCategory.Id },

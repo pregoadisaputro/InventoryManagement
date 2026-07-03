@@ -1,4 +1,5 @@
 using InventoryManagement.Api.Features.Categories.Endpoints.CreateCategory;
+using InventoryManagement.Api.Features.Categories.Endpoints.GetCategories;
 
 namespace InventoryManagement.Api.Features.Categories;
 
@@ -9,5 +10,6 @@ public static class CategoriesEndpoints
         var group = app.MapGroup("/categories");
 
         group.MapCreateCategory();
+        group.MapGetCategories();
     }
 }
