@@ -1,0 +1,23 @@
+using InventoryManagement.Api.Data;
+using Microsoft.EntityFrameworkCore;
+
+namespace InventoryManagement.Api.Features.Categories.Endpoints.GetCategories;
+
+public static class GetCategories
+{
+    public static void MapGetCategories(this IEndpointRouteBuilder group)
+    {
+        group
+            .MapGet(
+                "/",
+                async (AppDbContext db) =>
+                {
+                    await db
+                        .Categories.Select(c => new GetCategoriesResponse(c.Id, c.Name))
+                        .AsNoTracking()
+                        .ToListAsync();
+                }
+            )
+            .Produces<List<GetCategoriesResponse>>();
+    }
+}
