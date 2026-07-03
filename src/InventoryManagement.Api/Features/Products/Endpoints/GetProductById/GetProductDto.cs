@@ -1,4 +1,4 @@
-namespace InventoryManagement.Api.Features.Products.Endpoints.GetProduct;
+namespace InventoryManagement.Api.Features.Products.Endpoints.GetProductById;
 
 public record GetProductByIdResponse(
     int Id,

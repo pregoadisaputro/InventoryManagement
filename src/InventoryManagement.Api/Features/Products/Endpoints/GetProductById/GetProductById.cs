@@ -2,7 +2,7 @@ using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Features.Products.Constant;
 using Microsoft.EntityFrameworkCore;
 
-namespace InventoryManagement.Api.Features.Products.Endpoints.GetProduct;
+namespace InventoryManagement.Api.Features.Products.Endpoints.GetProductById;
 
 public static class GetProductById
 {
