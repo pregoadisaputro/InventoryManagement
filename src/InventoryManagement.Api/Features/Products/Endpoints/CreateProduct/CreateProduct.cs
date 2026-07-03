@@ -33,9 +33,9 @@ public static class CreateProduct
 
                 var existingCategory = await db
                     .Categories.AsNoTracking()
-                    .FirstOrDefaultAsync(c => c.Id == request.CategoryId);
+                    .AnyAsync(c => c.Id == request.CategoryId);
 
-                if (existingCategory is null)
+                if (!existingCategory)
                 {
                     return Results.BadRequest(
                         $"Category with ID {request.CategoryId} does not exist."
@@ -50,7 +50,7 @@ public static class CreateProduct
                     Price = request.Price,
                     Stock = request.Stock,
                     MinimumStock = request.MinimumStock,
-                    CategoryId = existingCategory.Id,
+                    CategoryId = request.CategoryId,
                 };
 
                 db.Products.Add(newProduct);
