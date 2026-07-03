@@ -1,5 +1,6 @@
 using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Features.Categories.Constant;
+using Microsoft.AspNetCore.Http.HttpResults;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Api.Features.Categories.Endpoints.GetCategories;
@@ -11,15 +12,20 @@ public static class GetCategories
         group
             .MapGet(
                 "/",
-                async (AppDbContext db) =>
+                async Task<Ok<List<GetCategoriesResponse>>> (
+                    AppDbContext db,
+                    CancellationToken ct
+                ) =>
                 {
-                    return await db
-                        .Categories.Select(c => new GetCategoriesResponse(c.Id, c.Name))
-                        .AsNoTracking()
-                        .ToListAsync();
+                    var categories = await db
+                        .Categories.AsNoTracking()
+                        .Select(c => new GetCategoriesResponse(c.Id, c.Name))
+                        .ToListAsync(ct);
+
+                    return TypedResults.Ok(categories);
                 }
             )
             .WithName(CategoryEndpointNames.GetCategory)
-            .Produces<List<GetCategoriesResponse>>();
+            .Produces<List<GetCategoriesResponse>>(200);
     }
 }
