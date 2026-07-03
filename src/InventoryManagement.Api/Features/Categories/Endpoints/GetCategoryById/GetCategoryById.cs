@@ -2,7 +2,7 @@ using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Features.Categories.Constant;
 using Microsoft.EntityFrameworkCore;
 
-namespace InventoryManagement.Api.Features.Categories.Endpoints.GetCategory;
+namespace InventoryManagement.Api.Features.Categories.Endpoints.GetCategoryById;
 
 public static class GetCategoryById
 {
