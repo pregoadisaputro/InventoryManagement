@@ -11,15 +11,15 @@ public static class GetCategoryById
         group
             .MapGet(
                 "/{id:int}",
-                async (int Id, AppDbContext db, CancellationToken cancellationToken) =>
+                async (int id, AppDbContext db, CancellationToken cancellationToken) =>
                 {
                     var existingCategory = await db
                         .Categories.AsNoTracking()
-                        .FirstOrDefaultAsync(c => c.Id == Id, cancellationToken);
+                        .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
 
                     if (existingCategory is null)
                     {
-                        return Results.BadRequest($"Category with ID {Id} not exist.");
+                        return Results.BadRequest($"Category with ID {id} not exist.");
                     }
 
                     return Results.Ok(

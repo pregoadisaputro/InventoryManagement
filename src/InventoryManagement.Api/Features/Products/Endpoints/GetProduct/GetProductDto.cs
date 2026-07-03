@@ -1,7 +1,5 @@
 namespace InventoryManagement.Api.Features.Products.Endpoints.GetProduct;
 
-public record GetProductByIdRequest(int Id);
-
 public record GetProductByIdResponse(
     int Id,
     string Name,
@@ -11,6 +9,7 @@ public record GetProductByIdResponse(
     int Stock,
     int MinimumStock,
     int CategoryId,
+    string CategoryName,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt
 );
