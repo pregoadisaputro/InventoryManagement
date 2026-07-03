@@ -13,7 +13,7 @@ public static class GetCategories
                 "/",
                 async (AppDbContext db) =>
                 {
-                    await db
+                    return await db
                         .Categories.Select(c => new GetCategoriesResponse(c.Id, c.Name))
                         .AsNoTracking()
                         .ToListAsync();
