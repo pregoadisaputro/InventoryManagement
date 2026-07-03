@@ -25,7 +25,7 @@ public static class CreateCategory
                 var newCategory = new Category { Name = request.Name };
 
                 return Results.CreatedAtRoute(
-                    CategoryEndpointNames.GetCategoryById,
+                    CategoryEndpointNames.GetCategory,
                     new { id = newCategory.Id },
                     new CreateCategoryResponse(newCategory.Id, newCategory.Name)
                 );
