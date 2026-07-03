@@ -11,11 +11,15 @@ public static class CreateCategory
     {
         group.MapPost(
             "/",
-            async (CreateCategoryRequest request, AppDbContext db) =>
+            async (
+                CreateCategoryRequest request,
+                AppDbContext db,
+                CancellationToken cancellationToken
+            ) =>
             {
                 var existingCategory = await db
                     .Categories.AsNoTracking()
-                    .AnyAsync(c => EF.Functions.ILike(c.Name, request.Name));
+                    .AnyAsync(c => EF.Functions.ILike(c.Name, request.Name), cancellationToken);
 
                 if (existingCategory)
                 {
@@ -25,7 +29,7 @@ public static class CreateCategory
                 var newCategory = new Category { Name = request.Name };
 
                 db.Categories.Add(newCategory);
-                await db.SaveChangesAsync();
+                await db.SaveChangesAsync(cancellationToken);
 
                 return Results.CreatedAtRoute(
                     CategoryEndpointNames.GetCategoryById,
