@@ -11,12 +11,12 @@ public static class GetCategories
         group
             .MapGet(
                 "/",
-                async (AppDbContext db) =>
+                async (AppDbContext db, CancellationToken cancellationToken) =>
                 {
                     return await db
                         .Categories.Select(c => new GetCategoriesResponse(c.Id, c.Name))
                         .AsNoTracking()
-                        .ToListAsync();
+                        .ToListAsync(cancellationToken);
                 }
             )
             .WithName(CategoryEndpointNames.GetCategory)

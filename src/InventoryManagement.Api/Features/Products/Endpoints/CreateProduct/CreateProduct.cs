@@ -11,15 +11,19 @@ public static class CreateProduct
     {
         group.MapPost(
             "/",
-            async (CreateProductRequest request, AppDbContext db) =>
+            async (
+                CreateProductRequest request,
+                AppDbContext db,
+                CancellationToken cancellationToken
+            ) =>
             {
                 var existingProductName = await db
                     .Products.AsNoTracking()
-                    .AnyAsync(p => EF.Functions.ILike(p.Name, request.Name));
+                    .AnyAsync(p => EF.Functions.ILike(p.Name, request.Name), cancellationToken);
 
                 var existingProductSku = await db
                     .Products.AsNoTracking()
-                    .AnyAsync(p => EF.Functions.ILike(p.Sku, request.Sku));
+                    .AnyAsync(p => EF.Functions.ILike(p.Sku, request.Sku), cancellationToken);
 
                 if (existingProductName)
                 {
@@ -33,7 +37,7 @@ public static class CreateProduct
 
                 var existingCategory = await db
                     .Categories.AsNoTracking()
-                    .AnyAsync(c => c.Id == request.CategoryId);
+                    .AnyAsync(c => c.Id == request.CategoryId, cancellationToken);
 
                 if (!existingCategory)
                 {
@@ -54,7 +58,7 @@ public static class CreateProduct
                 };
 
                 db.Products.Add(newProduct);
-                await db.SaveChangesAsync();
+                await db.SaveChangesAsync(cancellationToken);
 
                 return Results.CreatedAtRoute(
                     ProductEndpointNames.GetProductById,
