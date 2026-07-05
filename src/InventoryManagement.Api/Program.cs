@@ -1,6 +1,6 @@
 using InventoryManagement.Api.Data.Configuration;
 using InventoryManagement.Api.Features.Categories;
-using InventoryManagement.Api.Features.Products.Endpoints;
+using InventoryManagement.Api.Features.Products;
 
 var builder = WebApplication.CreateBuilder(args);
 

@@ -1,7 +1,7 @@
 using InventoryManagement.Api.Features.Products.Endpoints.CreateProduct;
 using InventoryManagement.Api.Features.Products.Endpoints.GetProductById;
 
-namespace InventoryManagement.Api.Features.Products.Endpoints;
+namespace InventoryManagement.Api.Features.Products;
 
 public static class ProductsEndpoints
 {
