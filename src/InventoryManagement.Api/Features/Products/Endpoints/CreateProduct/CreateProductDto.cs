@@ -7,7 +7,8 @@ public record CreateProductRequest(
     decimal Price,
     int Stock,
     int MinimumStock,
-    int CategoryId
+    int CategoryId,
+    int? SuppplierId
 );
 
 public record CreateProductResponse(
