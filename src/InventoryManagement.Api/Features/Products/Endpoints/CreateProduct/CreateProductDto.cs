@@ -8,7 +8,7 @@ public record CreateProductRequest(
     int Stock,
     int MinimumStock,
     int CategoryId,
-    int? SuppplierId
+    int? SupplierId
 );
 
 public record CreateProductResponse(
@@ -20,6 +20,7 @@ public record CreateProductResponse(
     int Stock,
     int MinimumStock,
     int CategoryId,
+    int? SupplierId,
     DateTimeOffset CreatedAt,
     DateTimeOffset UpdatedAt
 );

@@ -46,6 +46,17 @@ public static class CreateProduct
                     );
                 }
 
+                var existingSupplier = await db
+                    .Suppliers.AsNoTracking()
+                    .AnyAsync(s => s.Id == request.SupplierId, cancellationToken);
+
+                if (!existingSupplier)
+                {
+                    return Results.BadRequest(
+                        $"Supplier with ID {request.SupplierId} does not exist."
+                    );
+                }
+
                 var newProduct = new Product
                 {
                     Name = request.Name,
@@ -55,6 +66,7 @@ public static class CreateProduct
                     Stock = request.Stock,
                     MinimumStock = request.MinimumStock,
                     CategoryId = request.CategoryId,
+                    SupplierId = request.SupplierId,
                 };
 
                 db.Products.Add(newProduct);
@@ -72,6 +84,7 @@ public static class CreateProduct
                         newProduct.Stock,
                         newProduct.MinimumStock,
                         newProduct.CategoryId,
+                        newProduct.SupplierId,
                         newProduct.CreatedAt,
                         newProduct.UpdatedAt
                     )
