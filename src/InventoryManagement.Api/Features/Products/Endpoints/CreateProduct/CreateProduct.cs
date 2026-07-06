@@ -46,15 +46,18 @@ public static class CreateProduct
                     );
                 }
 
-                var existingSupplier = await db
-                    .Suppliers.AsNoTracking()
-                    .AnyAsync(s => s.Id == request.SupplierId, cancellationToken);
-
-                if (!existingSupplier)
+                if (request.SupplierId is not null)
                 {
-                    return Results.BadRequest(
-                        $"Supplier with ID {request.SupplierId} does not exist."
-                    );
+                    var existingSupplier = await db
+                        .Suppliers.AsNoTracking()
+                        .AnyAsync(s => s.Id == request.SupplierId, cancellationToken);
+
+                    if (!existingSupplier)
+                    {
+                        return Results.BadRequest(
+                            $"Supplier with ID {request.SupplierId} does not exist."
+                        );
+                    }
                 }
 
                 var newProduct = new Product

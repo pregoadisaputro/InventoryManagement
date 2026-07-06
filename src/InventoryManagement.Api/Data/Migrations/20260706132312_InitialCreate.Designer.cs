@@ -12,8 +12,8 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace InventoryManagement.Api.Data.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    [Migration("20260706130522_MakeTheSupplierNullable")]
-    partial class MakeTheSupplierNullable
+    [Migration("20260706132312_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
