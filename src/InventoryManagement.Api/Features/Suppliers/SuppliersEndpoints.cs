@@ -1,4 +1,5 @@
 using InventoryManagement.Api.Features.Suppliers.Endpoints.CreateSupplier;
+using InventoryManagement.Api.Features.Suppliers.Endpoints.GetSupplier;
 
 namespace InventoryManagement.Api.Features.Suppliers;
 
@@ -9,5 +10,6 @@ public static class SuppliersEndpoints
         var group = app.MapGroup("/suppliers");
 
         group.MapCreateSupplier();
+        group.MapGetSupplier();
     }
 }
