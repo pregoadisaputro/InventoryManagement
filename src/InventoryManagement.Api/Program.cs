@@ -1,6 +1,7 @@
 using InventoryManagement.Api.Data.Configuration;
 using InventoryManagement.Api.Features.Categories;
 using InventoryManagement.Api.Features.Products;
+using InventoryManagement.Api.Features.Suppliers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,6 +13,7 @@ var app = builder.Build();
 
 app.MapCategories();
 app.MapProducts();
+app.MapSuppliers();
 
 if (app.Environment.IsDevelopment())
 {
