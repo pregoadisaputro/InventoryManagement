@@ -2,11 +2,11 @@ using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Features.Products.Constant;
 using Microsoft.EntityFrameworkCore;
 
-namespace InventoryManagement.Api.Features.Products.Endpoints.GetProductById;
+namespace InventoryManagement.Api.Features.Products.Endpoints.GetProduct;
 
-public static class GetProductById
+public static class GetProduct
 {
-    public static void MapGetProductById(this IEndpointRouteBuilder group)
+    public static void MapGetProduct(this IEndpointRouteBuilder group)
     {
         group
             .MapGet(
@@ -25,7 +25,7 @@ public static class GetProductById
                     }
 
                     return Results.Ok(
-                        new GetProductByIdResponse(
+                        new GetProductResponse(
                             existingProduct.Id,
                             existingProduct.Name,
                             existingProduct.Sku,
@@ -41,6 +41,6 @@ public static class GetProductById
                     );
                 }
             )
-            .WithName(ProductEndpointNames.GetProductById);
+            .WithName(ProductEndpointNames.GetProduct);
     }
 }

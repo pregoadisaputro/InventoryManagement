@@ -32,7 +32,7 @@ public static class CreateCategory
                 await db.SaveChangesAsync(cancellationToken);
 
                 return Results.CreatedAtRoute(
-                    CategoryEndpointNames.GetCategoryById,
+                    CategoryEndpointNames.GetCategory,
                     new { id = newCategory.Id },
                     new CreateCategoryResponse(newCategory.Id, newCategory.Name)
                 );

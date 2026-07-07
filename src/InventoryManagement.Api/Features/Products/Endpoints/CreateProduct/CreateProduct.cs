@@ -76,7 +76,7 @@ public static class CreateProduct
                 await db.SaveChangesAsync(cancellationToken);
 
                 return Results.CreatedAtRoute(
-                    ProductEndpointNames.GetProductById,
+                    ProductEndpointNames.GetProduct,
                     new { id = newProduct.Id },
                     new CreateProductResponse(
                         newProduct.Id,

@@ -2,11 +2,11 @@ using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Features.Categories.Constant;
 using Microsoft.EntityFrameworkCore;
 
-namespace InventoryManagement.Api.Features.Categories.Endpoints.GetCategoryById;
+namespace InventoryManagement.Api.Features.Categories.Endpoints.GetCategory;
 
-public static class GetCategoryById
+public static class GetCategory
 {
-    public static void MapGetCategoryById(this IEndpointRouteBuilder group)
+    public static void MapGetCategory(this IEndpointRouteBuilder group)
     {
         group
             .MapGet(
@@ -23,10 +23,10 @@ public static class GetCategoryById
                     }
 
                     return Results.Ok(
-                        new GetCategoryByIdResponse(existingCategory.Id, existingCategory.Name)
+                        new GetCategoryResponse(existingCategory.Id, existingCategory.Name)
                     );
                 }
             )
-            .WithName(CategoryEndpointNames.GetCategoryById);
+            .WithName(CategoryEndpointNames.GetCategory);
     }
 }

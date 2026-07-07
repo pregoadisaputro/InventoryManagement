@@ -19,7 +19,7 @@ public static class GetCategories
                         .ToListAsync(cancellationToken);
                 }
             )
-            .WithName(CategoryEndpointNames.GetCategory)
+            .WithName(CategoryEndpointNames.GetCategories)
             .Produces<List<GetCategoriesResponse>>();
     }
 }

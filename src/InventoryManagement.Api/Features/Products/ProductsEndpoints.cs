@@ -1,5 +1,5 @@
 using InventoryManagement.Api.Features.Products.Endpoints.CreateProduct;
-using InventoryManagement.Api.Features.Products.Endpoints.GetProductById;
+using InventoryManagement.Api.Features.Products.Endpoints.GetProduct;
 
 namespace InventoryManagement.Api.Features.Products;
 
@@ -10,6 +10,6 @@ public static class ProductsEndpoints
         var group = app.MapGroup("/products");
 
         group.MapCreateProduct();
-        group.MapGetProductById();
+        group.MapGetProduct();
     }
 }
