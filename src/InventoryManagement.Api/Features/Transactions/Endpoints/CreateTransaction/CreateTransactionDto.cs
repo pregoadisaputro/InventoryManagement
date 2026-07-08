@@ -5,6 +5,7 @@ namespace InventoryManagement.Api.Features.Transactions.Endpoints.CreateTransact
 public record CreateTransactionRequest(string? Notes, int Quantity, TransactionType Type);
 
 public record CreateTransactionResponse(
+    int Id,
     string? Notes,
     int Quantity,
     TransactionType Type,

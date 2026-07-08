@@ -80,6 +80,7 @@ public static class CreateTransaction
                     TransactionsEndpointsNames.GetTransaction,
                     new { productId, id = transaction.Id },
                     new CreateTransactionResponse(
+                        transaction.Id,
                         transaction.Notes,
                         transaction.Quantity,
                         transaction.Type,
