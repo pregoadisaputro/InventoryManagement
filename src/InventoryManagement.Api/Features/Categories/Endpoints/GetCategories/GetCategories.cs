@@ -20,6 +20,6 @@ public static class GetCategories
                 }
             )
             .WithName(CategoryEndpointNames.GetCategories)
-            .Produces<List<GetCategoriesResponse>>();
+            .Produces<List<GetCategoriesResponse>>(StatusCodes.Status200OK);
     }
 }

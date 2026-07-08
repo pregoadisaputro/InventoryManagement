@@ -9,46 +9,51 @@ public static class CreateSupplier
 {
     public static void MapCreateSupplier(this IEndpointRouteBuilder group)
     {
-        group.MapPost(
-            "/",
-            async (
-                CreateSupplierRequest request,
-                AppDbContext db,
-                CancellationToken cancellationToken
-            ) =>
-            {
-                var existingSupplier = await db
-                    .Suppliers.AsNoTracking()
-                    .AnyAsync(s => EF.Functions.ILike(s.Name, request.Name), cancellationToken);
-
-                if (existingSupplier)
+        group
+            .MapPost(
+                "/",
+                async (
+                    CreateSupplierRequest request,
+                    AppDbContext db,
+                    CancellationToken cancellationToken
+                ) =>
                 {
-                    return Results.Conflict($"Supplier with name {request.Name} already exist.");
+                    var existingSupplier = await db
+                        .Suppliers.AsNoTracking()
+                        .AnyAsync(s => EF.Functions.ILike(s.Name, request.Name), cancellationToken);
+
+                    if (existingSupplier)
+                    {
+                        return Results.Conflict(
+                            $"Supplier with name {request.Name} already exist."
+                        );
+                    }
+
+                    var newSupplier = new Supplier
+                    {
+                        Name = request.Name,
+                        PhoneNumber = request.PhoneNumber,
+                        Email = request.Email,
+                        Address = request.Address,
+                    };
+
+                    db.Suppliers.Add(newSupplier);
+                    await db.SaveChangesAsync(cancellationToken);
+
+                    return Results.CreatedAtRoute(
+                        SupplierEndpointNames.GetSupplier,
+                        new { id = newSupplier.Id },
+                        new CreateSupplierResponse(
+                            newSupplier.Id,
+                            newSupplier.Name,
+                            newSupplier.PhoneNumber,
+                            newSupplier.Email,
+                            newSupplier.Address
+                        )
+                    );
                 }
-
-                var newSupplier = new Supplier
-                {
-                    Name = request.Name,
-                    PhoneNumber = request.PhoneNumber,
-                    Email = request.Email,
-                    Address = request.Address,
-                };
-
-                db.Suppliers.Add(newSupplier);
-                await db.SaveChangesAsync(cancellationToken);
-
-                return Results.CreatedAtRoute(
-                    SupplierEndpointNames.GetSupplier,
-                    new { id = newSupplier.Id },
-                    new CreateSupplierResponse(
-                        newSupplier.Id,
-                        newSupplier.Name,
-                        newSupplier.PhoneNumber,
-                        newSupplier.Email,
-                        newSupplier.Address
-                    )
-                );
-            }
-        );
+            )
+            .Produces<CreateSupplierResponse>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status409Conflict);
     }
 }

@@ -41,6 +41,8 @@ public static class GetProduct
                     return Results.Ok(response);
                 }
             )
-            .WithName(ProductEndpointNames.GetProduct);
+            .WithName(ProductEndpointNames.GetProduct)
+            .Produces<GetProductResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
     }
 }

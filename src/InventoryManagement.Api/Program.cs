@@ -27,7 +27,10 @@ app.MapTransactions();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
-    app.MapScalarApiReference();
+    app.MapScalarApiReference(options =>
+    {
+        options.WithTitle("Freego Inventory Management").WithClassicLayout().ForceDarkMode();
+    });
 }
 
 app.UseHttpsRedirection();

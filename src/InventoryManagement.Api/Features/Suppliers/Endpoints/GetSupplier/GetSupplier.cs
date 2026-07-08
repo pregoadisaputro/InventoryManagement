@@ -33,6 +33,8 @@ public static class GetSupplier
                     return Results.Ok(response);
                 }
             )
-            .WithName(SupplierEndpointNames.GetSupplier);
+            .WithName(SupplierEndpointNames.GetSupplier)
+            .Produces<GetSupplierResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
     }
 }

@@ -9,90 +9,94 @@ public static class CreateProduct
 {
     public static void MapCreateProduct(this IEndpointRouteBuilder group)
     {
-        group.MapPost(
-            "/",
-            async (
-                CreateProductRequest request,
-                AppDbContext db,
-                CancellationToken cancellationToken
-            ) =>
-            {
-                var existingProductName = await db
-                    .Products.AsNoTracking()
-                    .AnyAsync(p => EF.Functions.ILike(p.Name, request.Name), cancellationToken);
-
-                var existingProductSku = await db
-                    .Products.AsNoTracking()
-                    .AnyAsync(p => EF.Functions.ILike(p.Sku, request.Sku), cancellationToken);
-
-                if (existingProductName)
+        group
+            .MapPost(
+                "/",
+                async (
+                    CreateProductRequest request,
+                    AppDbContext db,
+                    CancellationToken cancellationToken
+                ) =>
                 {
-                    return Results.Conflict("A product with this name already exists.");
-                }
+                    var existingProductName = await db
+                        .Products.AsNoTracking()
+                        .AnyAsync(p => EF.Functions.ILike(p.Name, request.Name), cancellationToken);
 
-                if (existingProductSku)
-                {
-                    return Results.Conflict("A product with this SKU already exists.");
-                }
+                    var existingProductSku = await db
+                        .Products.AsNoTracking()
+                        .AnyAsync(p => EF.Functions.ILike(p.Sku, request.Sku), cancellationToken);
 
-                var existingCategory = await db
-                    .Categories.AsNoTracking()
-                    .AnyAsync(c => c.Id == request.CategoryId, cancellationToken);
+                    if (existingProductName)
+                    {
+                        return Results.Conflict("A product with this name already exists.");
+                    }
 
-                if (!existingCategory)
-                {
-                    return Results.NotFound(
-                        $"Category with ID {request.CategoryId} was not found."
-                    );
-                }
+                    if (existingProductSku)
+                    {
+                        return Results.Conflict("A product with this SKU already exists.");
+                    }
 
-                if (request.SupplierId is not null)
-                {
-                    var existingSupplier = await db
-                        .Suppliers.AsNoTracking()
-                        .AnyAsync(s => s.Id == request.SupplierId, cancellationToken);
+                    var existingCategory = await db
+                        .Categories.AsNoTracking()
+                        .AnyAsync(c => c.Id == request.CategoryId, cancellationToken);
 
-                    if (!existingSupplier)
+                    if (!existingCategory)
                     {
                         return Results.NotFound(
-                            $"Supplier with ID {request.SupplierId} was not found."
+                            $"Category with ID {request.CategoryId} was not found."
                         );
                     }
+
+                    if (request.SupplierId is not null)
+                    {
+                        var existingSupplier = await db
+                            .Suppliers.AsNoTracking()
+                            .AnyAsync(s => s.Id == request.SupplierId, cancellationToken);
+
+                        if (!existingSupplier)
+                        {
+                            return Results.NotFound(
+                                $"Supplier with ID {request.SupplierId} was not found."
+                            );
+                        }
+                    }
+
+                    var newProduct = new Product
+                    {
+                        Name = request.Name,
+                        Sku = request.Sku,
+                        Description = request.Description,
+                        Price = request.Price,
+                        Stock = request.Stock,
+                        MinimumStock = request.MinimumStock,
+                        CategoryId = request.CategoryId,
+                        SupplierId = request.SupplierId,
+                    };
+
+                    db.Products.Add(newProduct);
+                    await db.SaveChangesAsync(cancellationToken);
+
+                    return Results.CreatedAtRoute(
+                        ProductEndpointNames.GetProduct,
+                        new { id = newProduct.Id },
+                        new CreateProductResponse(
+                            newProduct.Id,
+                            newProduct.Name,
+                            newProduct.Sku,
+                            newProduct.Description,
+                            newProduct.Price,
+                            newProduct.Stock,
+                            newProduct.MinimumStock,
+                            newProduct.CategoryId,
+                            newProduct.SupplierId,
+                            newProduct.CreatedAt,
+                            newProduct.UpdatedAt
+                        )
+                    );
                 }
-
-                var newProduct = new Product
-                {
-                    Name = request.Name,
-                    Sku = request.Sku,
-                    Description = request.Description,
-                    Price = request.Price,
-                    Stock = request.Stock,
-                    MinimumStock = request.MinimumStock,
-                    CategoryId = request.CategoryId,
-                    SupplierId = request.SupplierId,
-                };
-
-                db.Products.Add(newProduct);
-                await db.SaveChangesAsync(cancellationToken);
-
-                return Results.CreatedAtRoute(
-                    ProductEndpointNames.GetProduct,
-                    new { id = newProduct.Id },
-                    new CreateProductResponse(
-                        newProduct.Id,
-                        newProduct.Name,
-                        newProduct.Sku,
-                        newProduct.Description,
-                        newProduct.Price,
-                        newProduct.Stock,
-                        newProduct.MinimumStock,
-                        newProduct.CategoryId,
-                        newProduct.SupplierId,
-                        newProduct.CreatedAt,
-                        newProduct.UpdatedAt
-                    )
-                );
-            }
-        );
+            )
+            .Produces<CreateProductResponse>(StatusCodes.Status201Created)
+            .Produces(StatusCodes.Status409Conflict)
+            .Produces(StatusCodes.Status404NotFound);
     }
 }

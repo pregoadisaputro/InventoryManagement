@@ -42,6 +42,8 @@ public static class GetTransaction
                     return Results.Ok(response);
                 }
             )
-            .WithName(TransactionsEndpointsNames.GetTransaction);
+            .WithName(TransactionsEndpointsNames.GetTransaction)
+            .Produces<GetTransactionResponse>(StatusCodes.Status200OK)
+            .Produces(StatusCodes.Status404NotFound);
     }
 }
