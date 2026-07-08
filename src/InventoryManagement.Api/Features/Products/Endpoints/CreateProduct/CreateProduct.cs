@@ -26,25 +26,19 @@ public static class CreateProduct
                     .AnyAsync(p => EF.Functions.ILike(p.Sku, request.Sku), cancellationToken);
 
                 if (existingProductName)
-                {
                     return Results.Conflict("A product with this name already exists.");
-                }
 
                 if (existingProductSku)
-                {
                     return Results.Conflict("A product with this SKU already exists.");
-                }
 
                 var existingCategory = await db
                     .Categories.AsNoTracking()
                     .AnyAsync(c => c.Id == request.CategoryId, cancellationToken);
 
                 if (!existingCategory)
-                {
-                    return Results.BadRequest(
+                    return Results.NotFound(
                         $"Category with ID {request.CategoryId} does not exist."
                     );
-                }
 
                 if (request.SupplierId is not null)
                 {
@@ -53,11 +47,9 @@ public static class CreateProduct
                         .AnyAsync(s => s.Id == request.SupplierId, cancellationToken);
 
                     if (!existingSupplier)
-                    {
-                        return Results.BadRequest(
+                        return Results.NotFound(
                             $"Supplier with ID {request.SupplierId} does not exist."
                         );
-                    }
                 }
 
                 var newProduct = new Product

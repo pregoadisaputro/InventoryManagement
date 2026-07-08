@@ -22,9 +22,7 @@ public static class CreateSupplier
                     .AnyAsync(s => EF.Functions.ILike(s.Name, request.Name), cancellationToken);
 
                 if (existingSupplier)
-                {
                     return Results.Conflict($"Supplier with name {request.Name} already exist.");
-                }
 
                 var newSupplier = new Supplier
                 {

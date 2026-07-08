@@ -18,9 +18,7 @@ public static class GetCategory
                         .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
 
                     if (existingCategory is null)
-                    {
                         return Results.NotFound($"Category with ID {id} not exist.");
-                    }
 
                     return Results.Ok(
                         new GetCategoryResponse(existingCategory.Id, existingCategory.Name)

@@ -16,13 +16,10 @@ public static class GetProduct
                     var existingProduct = await db
                         .Products.AsNoTracking()
                         .Include(p => p.Category)
-                        .OrderBy(p => p.Id)
                         .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
 
                     if (existingProduct is null)
-                    {
                         return Results.NotFound($"Product with ID {id} not exist.");
-                    }
 
                     return Results.Ok(
                         new GetProductResponse(

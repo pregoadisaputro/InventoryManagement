@@ -18,9 +18,7 @@ public static class GetSupplier
                         .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
                     if (existingSupplier is null)
-                    {
                         return Results.NotFound($"Supplier with ID {id} does not exist.");
-                    }
 
                     return Results.Ok(
                         new GetSupplierResponse(
