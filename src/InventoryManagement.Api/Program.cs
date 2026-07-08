@@ -4,6 +4,7 @@ using InventoryManagement.Api.Features.Categories;
 using InventoryManagement.Api.Features.Products;
 using InventoryManagement.Api.Features.Suppliers;
 using InventoryManagement.Api.Features.Transactions;
+using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -26,6 +27,7 @@ app.MapTransactions();
 if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
+    app.MapScalarApiReference();
 }
 
 app.UseHttpsRedirection();
