@@ -27,12 +27,12 @@ public static class CreateProduct
 
                 if (existingProductName)
                 {
-                    return Results.BadRequest("A product with this name already exists.");
+                    return Results.Conflict("A product with this name already exists.");
                 }
 
                 if (existingProductSku)
                 {
-                    return Results.BadRequest("A product with this SKU already exists.");
+                    return Results.Conflict("A product with this SKU already exists.");
                 }
 
                 var existingCategory = await db

@@ -23,7 +23,7 @@ public static class CreateCategory
 
                 if (existingCategory)
                 {
-                    return Results.BadRequest("A category with this name already exist.");
+                    return Results.Conflict("A category with this name already exist.");
                 }
 
                 var newCategory = new Category { Name = request.Name };
