@@ -3,7 +3,7 @@ namespace InventoryManagement.Api.Features.Products.Endpoints.CreateProduct;
 public record CreateProductRequest(
     string Name,
     string Sku,
-    string Description,
+    string? Description,
     decimal Price,
     int Stock,
     int MinimumStock,
@@ -15,7 +15,7 @@ public record CreateProductResponse(
     int Id,
     string Name,
     string Sku,
-    string Description,
+    string? Description,
     decimal Price,
     int Stock,
     int MinimumStock,

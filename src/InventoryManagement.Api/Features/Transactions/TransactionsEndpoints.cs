@@ -1,4 +1,5 @@
 using InventoryManagement.Api.Features.Transactions.Endpoints.CreateTransaction;
+using InventoryManagement.Api.Features.Transactions.Endpoints.GetTransaction;
 
 namespace InventoryManagement.Api.Features.Transactions;
 
@@ -9,5 +10,6 @@ public static class TransactionsEndpoints
         var group = app.MapGroup("/products/{productId:int}/transactions");
 
         group.MapCreateTransaction();
+        group.MapGetTransaction();
     }
 }

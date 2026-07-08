@@ -23,7 +23,7 @@ public static class GetSupplier
                             s.Email,
                             s.Address
                         ))
-                        .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
+                        .FirstOrDefaultAsync(cancellationToken);
 
                     if (response is null)
                     {

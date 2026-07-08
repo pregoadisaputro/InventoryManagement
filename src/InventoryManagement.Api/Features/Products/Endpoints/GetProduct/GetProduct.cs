@@ -26,6 +26,8 @@ public static class GetProduct
                             p.MinimumStock,
                             p.CategoryId,
                             p.Category.Name,
+                            p.SupplierId,
+                            p.Supplier != null ? p.Supplier.Name : null,
                             p.CreatedAt,
                             p.UpdatedAt
                         ))
