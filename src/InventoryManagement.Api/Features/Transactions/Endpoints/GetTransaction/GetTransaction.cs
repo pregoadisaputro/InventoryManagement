@@ -18,7 +18,7 @@ public static class GetTransaction
                     CancellationToken cancellationToken
                 ) =>
                 {
-                    var existingTransaction = await db
+                    var response = await db
                         .Transactions.AsNoTracking()
                         .Where(t => t.Id == id && t.ProductId == productId)
                         .Select(t => new GetTransactionResponse(
@@ -34,12 +34,12 @@ public static class GetTransaction
                         ))
                         .FirstOrDefaultAsync(cancellationToken);
 
-                    if (existingTransaction is null)
+                    if (response is null)
                     {
                         return Results.NotFound($"Transaction with ID {id} was not found.");
                     }
 
-                    return Results.Ok(existingTransaction);
+                    return Results.Ok(response);
                 }
             )
             .WithName(TransactionsEndpointsNames.GetTransaction);

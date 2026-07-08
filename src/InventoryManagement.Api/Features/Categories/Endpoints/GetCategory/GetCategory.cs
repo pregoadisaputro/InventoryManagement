@@ -13,16 +13,18 @@ public static class GetCategory
                 "/{id:int}",
                 async (int id, AppDbContext db, CancellationToken cancellationToken) =>
                 {
-                    var existingCategory = await db
+                    var response = await db
                         .Categories.AsNoTracking()
-                        .FirstOrDefaultAsync(c => c.Id == id, cancellationToken);
+                        .Where(c => c.Id == id)
+                        .Select(c => new GetCategoryResponse(c.Id, c.Name))
+                        .FirstOrDefaultAsync(cancellationToken);
 
-                    if (existingCategory is null)
-                        return Results.NotFound($"Category with ID {id} not exist.");
+                    if (response is null)
+                    {
+                        return Results.NotFound($"Category with ID {id} was not found.");
+                    }
 
-                    return Results.Ok(
-                        new GetCategoryResponse(existingCategory.Id, existingCategory.Name)
-                    );
+                    return Results.Ok(response);
                 }
             )
             .WithName(CategoryEndpointNames.GetCategory);

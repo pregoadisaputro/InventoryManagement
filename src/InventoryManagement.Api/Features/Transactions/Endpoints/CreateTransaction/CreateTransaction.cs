@@ -25,10 +25,14 @@ public static class CreateTransaction
                 );
 
                 if (product is null)
+                {
                     return Results.NotFound($"Product with ID {productId} does not exist.");
+                }
 
                 if (request.Quantity <= 0)
+                {
                     return Results.BadRequest("Quantity must be greater than zero.");
+                }
 
                 var previousStock = product.Stock;
                 var newStock = previousStock;
@@ -41,9 +45,11 @@ public static class CreateTransaction
 
                     case TransactionType.StockOut:
                         if (previousStock < request.Quantity)
+                        {
                             return Results.BadRequest(
                                 $"Cannot remove {request.Quantity} units. Current stock is {previousStock}"
                             );
+                        }
 
                         newStock -= request.Quantity;
                         break;
@@ -52,7 +58,9 @@ public static class CreateTransaction
                         newStock += request.Quantity;
 
                         if (newStock < 0)
+                        {
                             return Results.BadRequest("Stock cannot be negative.");
+                        }
 
                         break;
 

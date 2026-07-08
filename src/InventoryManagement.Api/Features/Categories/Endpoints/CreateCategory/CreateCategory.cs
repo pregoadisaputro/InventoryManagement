@@ -22,7 +22,9 @@ public static class CreateCategory
                     .AnyAsync(c => EF.Functions.ILike(c.Name, request.Name), cancellationToken);
 
                 if (existingCategory)
+                {
                     return Results.Conflict("A category with this name already exist.");
+                }
 
                 var newCategory = new Category { Name = request.Name };
 

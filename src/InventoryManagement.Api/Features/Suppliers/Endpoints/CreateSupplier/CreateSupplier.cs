@@ -22,7 +22,9 @@ public static class CreateSupplier
                     .AnyAsync(s => EF.Functions.ILike(s.Name, request.Name), cancellationToken);
 
                 if (existingSupplier)
+                {
                     return Results.Conflict($"Supplier with name {request.Name} already exist.");
+                }
 
                 var newSupplier = new Supplier
                 {
@@ -36,7 +38,7 @@ public static class CreateSupplier
                 await db.SaveChangesAsync(cancellationToken);
 
                 return Results.CreatedAtRoute(
-                    SupplierEndpointNames.GetSupplierById,
+                    SupplierEndpointNames.GetSupplier,
                     new { id = newSupplier.Id },
                     new CreateSupplierResponse(
                         newSupplier.Id,

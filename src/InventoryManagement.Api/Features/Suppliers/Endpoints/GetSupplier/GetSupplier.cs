@@ -13,24 +13,26 @@ public static class GetSupplier
                 "/{id:int}",
                 async (int id, AppDbContext db, CancellationToken cancellationToken) =>
                 {
-                    var existingSupplier = await db
+                    var response = await db
                         .Suppliers.AsNoTracking()
+                        .Where(s => s.Id == id)
+                        .Select(s => new GetSupplierResponse(
+                            s.Id,
+                            s.Name,
+                            s.PhoneNumber,
+                            s.Email,
+                            s.Address
+                        ))
                         .FirstOrDefaultAsync(s => s.Id == id, cancellationToken);
 
-                    if (existingSupplier is null)
-                        return Results.NotFound($"Supplier with ID {id} does not exist.");
+                    if (response is null)
+                    {
+                        return Results.NotFound($"Supplier with ID {id} was not found.");
+                    }
 
-                    return Results.Ok(
-                        new GetSupplierResponse(
-                            existingSupplier.Id,
-                            existingSupplier.Name,
-                            existingSupplier.PhoneNumber,
-                            existingSupplier.Email,
-                            existingSupplier.Address
-                        )
-                    );
+                    return Results.Ok(response);
                 }
             )
-            .WithName(SupplierEndpointNames.GetSupplierById);
+            .WithName(SupplierEndpointNames.GetSupplier);
     }
 }

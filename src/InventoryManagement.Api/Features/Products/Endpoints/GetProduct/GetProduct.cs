@@ -13,29 +13,30 @@ public static class GetProduct
                 "/{id:int}",
                 async (int id, AppDbContext db, CancellationToken cancellationToken) =>
                 {
-                    var existingProduct = await db
+                    var response = await db
                         .Products.AsNoTracking()
-                        .Include(p => p.Category)
-                        .FirstOrDefaultAsync(p => p.Id == id, cancellationToken);
+                        .Where(p => p.Id == id)
+                        .Select(p => new GetProductResponse(
+                            p.Id,
+                            p.Name,
+                            p.Sku,
+                            p.Description,
+                            p.Price,
+                            p.Stock,
+                            p.MinimumStock,
+                            p.CategoryId,
+                            p.Category.Name,
+                            p.CreatedAt,
+                            p.UpdatedAt
+                        ))
+                        .FirstOrDefaultAsync(cancellationToken);
 
-                    if (existingProduct is null)
-                        return Results.NotFound($"Product with ID {id} not exist.");
+                    if (response is null)
+                    {
+                        return Results.NotFound($"Product with ID {id} was not found.");
+                    }
 
-                    return Results.Ok(
-                        new GetProductResponse(
-                            existingProduct.Id,
-                            existingProduct.Name,
-                            existingProduct.Sku,
-                            existingProduct.Description,
-                            existingProduct.Price,
-                            existingProduct.Stock,
-                            existingProduct.MinimumStock,
-                            existingProduct.CategoryId,
-                            existingProduct.Category.Name,
-                            existingProduct.CreatedAt,
-                            existingProduct.UpdatedAt
-                        )
-                    );
+                    return Results.Ok(response);
                 }
             )
             .WithName(ProductEndpointNames.GetProduct);
