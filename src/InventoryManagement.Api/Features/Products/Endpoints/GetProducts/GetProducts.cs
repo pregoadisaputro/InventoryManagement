@@ -1,6 +1,5 @@
 using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Features.Products.Constant;
-using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Api.Features.Products.Endpoints.GetProducts;
