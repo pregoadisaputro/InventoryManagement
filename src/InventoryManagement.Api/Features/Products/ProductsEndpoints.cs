@@ -1,5 +1,6 @@
 using InventoryManagement.Api.Features.Products.Endpoints.CreateProduct;
 using InventoryManagement.Api.Features.Products.Endpoints.GetProduct;
+using InventoryManagement.Api.Features.Products.Endpoints.GetProducts;
 
 namespace InventoryManagement.Api.Features.Products;
 
@@ -11,5 +12,6 @@ public static class ProductsEndpoints
 
         group.MapCreateProduct();
         group.MapGetProduct();
+        group.MapGetProducts();
     }
 }

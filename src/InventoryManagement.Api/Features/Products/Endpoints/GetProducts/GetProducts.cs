@@ -1,5 +1,6 @@
 using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Features.Products.Constant;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace InventoryManagement.Api.Features.Products.Endpoints.GetProducts;
@@ -12,7 +13,7 @@ public static class GetProducts
             .MapGet(
                 "/",
                 async (
-                    GetProductsRequest request,
+                    [AsParameters] GetProductsRequest request,
                     AppDbContext db,
                     CancellationToken cancellationToken
                 ) =>
@@ -30,7 +31,7 @@ public static class GetProducts
 
                     if (!string.IsNullOrWhiteSpace(request.Name))
                     {
-                        query = query.Where(p => p.Name.Contains(request.Name));
+                        query = query.Where(p => EF.Functions.ILike(p.Name, $"%{request.Name}%"));
                     }
 
                     var totalProducts = await query.CountAsync(cancellationToken);
