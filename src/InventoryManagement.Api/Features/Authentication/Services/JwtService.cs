@@ -8,6 +8,8 @@ namespace InventoryManagement.Api.Features.Authentication.Services;
 
 public class JwtService(IConfiguration configuration) : IJwtService
 {
+    public DateTimeOffset ExpiresAt { get; private set; }
+
     public string GenerateToken(User user)
     {
         var jwt = configuration.GetSection("Jwt");
@@ -24,6 +26,9 @@ public class JwtService(IConfiguration configuration) : IJwtService
         };
 
         var expirationMinutes = int.Parse(jwt["ExpirationMinutes"]!);
+
+        ExpiresAt = DateTimeOffset.UtcNow.AddMinutes(expirationMinutes);
+
         var token = new JwtSecurityToken(
             issuer: jwt["Issuer"],
             audience: jwt["Audience"],

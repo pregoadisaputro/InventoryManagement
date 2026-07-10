@@ -57,7 +57,9 @@ public static class Login
 
                     var token = jwtService.GenerateToken(user);
 
-                    return Results.Ok(new LoginResponse(token));
+                    return Results.Ok(
+                        new LoginResponse(user.Username, token, jwtService.ExpiresAt)
+                    );
                 }
             )
             .WithName(AuthEndpointNames.UserLogin)

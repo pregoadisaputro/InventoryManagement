@@ -6,7 +6,7 @@ public static class UserEndpoints
 {
     public static void MapUsers(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/users");
+        var group = app.MapGroup("/users").RequireAuthorization();
 
         group.MapGetUser();
     }

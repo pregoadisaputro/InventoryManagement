@@ -57,7 +57,7 @@ if (app.Environment.IsDevelopment())
     app.MapOpenApi();
     app.MapScalarApiReference(options =>
     {
-        options.WithTitle("Freego Inventory Management").WithClassicLayout().ForceDarkMode();
+        options.WithTitle("Freego Inventory Management");
     });
 }
 
