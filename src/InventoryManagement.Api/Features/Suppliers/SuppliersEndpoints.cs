@@ -7,7 +7,7 @@ public static class SuppliersEndpoints
 {
     public static void MapSuppliers(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/suppliers");
+        var group = app.MapGroup("/suppliers").RequireAuthorization();
 
         group.MapCreateSupplier();
         group.MapGetSupplier();

@@ -153,6 +153,30 @@ namespace InventoryManagement.Api.Data.Migrations
                     b.ToTable("Suppliers");
                 });
 
+            modelBuilder.Entity("InventoryManagement.Api.Data.Entity.User", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("integer");
+
+                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
+
+                    b.Property<DateTimeOffset>("CreatedAt")
+                        .HasColumnType("timestamp with time zone");
+
+                    b.Property<string>("PasswordHash")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.Property<string>("Username")
+                        .IsRequired()
+                        .HasColumnType("text");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("InventoryManagement.Api.Data.Entity.InventoryTransaction", b =>
                 {
                     b.HasOne("InventoryManagement.Api.Data.Entity.Product", "Product")

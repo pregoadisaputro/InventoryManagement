@@ -7,7 +7,7 @@ public static class TransactionsEndpoints
 {
     public static void MapTransactions(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/products/{productId:int}/transactions");
+        var group = app.MapGroup("/products/{productId:int}/transactions").RequireAuthorization();
 
         group.MapCreateTransaction();
         group.MapGetTransaction();

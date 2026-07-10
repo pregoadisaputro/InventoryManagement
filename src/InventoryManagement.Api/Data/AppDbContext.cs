@@ -12,4 +12,6 @@ public class AppDbContext : DbContext
     public DbSet<Category> Categories => Set<Category>();
     public DbSet<InventoryTransaction> Transactions => Set<InventoryTransaction>();
     public DbSet<Supplier> Suppliers => Set<Supplier>();
+
+    public DbSet<User> Users => Set<User>();
 }

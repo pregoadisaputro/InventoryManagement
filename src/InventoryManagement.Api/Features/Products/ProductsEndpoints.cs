@@ -10,7 +10,7 @@ public static class ProductsEndpoints
 {
     public static void MapProducts(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/products");
+        var group = app.MapGroup("/products").RequireAuthorization();
 
         group.MapCreateProduct();
         group.MapUpdateProduct();
