@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using FluentValidation;
 using InventoryManagement.Api.Data.Configuration;
+using InventoryManagement.Api.Extensions;
 using InventoryManagement.Api.Features.Authentication;
 using InventoryManagement.Api.Features.Authentication.Services;
 using InventoryManagement.Api.Features.Categories;
@@ -15,7 +16,10 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApi(options =>
+{
+    options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+});
 
 builder.Services.AddInfrastructure(builder.Configuration);
 
