@@ -1,3 +1,4 @@
+using FluentValidation;
 using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Data.Entity;
 using InventoryManagement.Api.Features.Suppliers.Constant;
@@ -14,10 +15,21 @@ public static class CreateSupplier
                 "/",
                 async (
                     CreateSupplierRequest request,
+                    IValidator<CreateSupplierRequest> validator,
                     AppDbContext db,
                     CancellationToken cancellationToken
                 ) =>
                 {
+                    var validationResult = await validator.ValidateAsync(
+                        request,
+                        cancellationToken
+                    );
+
+                    if (!validationResult.IsValid)
+                    {
+                        return Results.ValidationProblem(validationResult.ToDictionary());
+                    }
+
                     var existingSupplier = await db
                         .Suppliers.AsNoTracking()
                         .AnyAsync(s => EF.Functions.ILike(s.Name, request.Name), cancellationToken);

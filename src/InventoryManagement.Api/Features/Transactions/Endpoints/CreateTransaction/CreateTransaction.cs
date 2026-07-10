@@ -1,3 +1,4 @@
+using FluentValidation;
 using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Data.Entity;
 using InventoryManagement.Api.Data.Enum;
@@ -16,10 +17,21 @@ public static class CreateTransaction
                 async (
                     int productId,
                     CreateTransactionRequest request,
+                    IValidator<CreateTransactionRequest> validator,
                     AppDbContext db,
                     CancellationToken cancellationToken
                 ) =>
                 {
+                    var validationResult = await validator.ValidateAsync(
+                        request,
+                        cancellationToken
+                    );
+
+                    if (!validationResult.IsValid)
+                    {
+                        return Results.ValidationProblem(validationResult.ToDictionary());
+                    }
+
                     var product = await db.Products.FirstOrDefaultAsync(
                         p => p.Id == productId,
                         cancellationToken

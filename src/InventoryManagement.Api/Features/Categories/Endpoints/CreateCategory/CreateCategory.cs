@@ -1,3 +1,4 @@
+using FluentValidation;
 using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Data.Entity;
 using InventoryManagement.Api.Features.Categories.Constant;
@@ -14,10 +15,21 @@ public static class CreateCategory
                 "/",
                 async (
                     CreateCategoryRequest request,
+                    IValidator<CreateCategoryRequest> validator,
                     AppDbContext db,
                     CancellationToken cancellationToken
                 ) =>
                 {
+                    var validationResult = await validator.ValidateAsync(
+                        request,
+                        cancellationToken
+                    );
+
+                    if (!validationResult.IsValid)
+                    {
+                        return Results.ValidationProblem(validationResult.ToDictionary());
+                    }
+
                     var existingCategory = await db
                         .Categories.AsNoTracking()
                         .AnyAsync(c => EF.Functions.ILike(c.Name, request.Name), cancellationToken);

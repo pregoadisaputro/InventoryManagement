@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using FluentValidation;
 using InventoryManagement.Api.Data.Configuration;
 using InventoryManagement.Api.Features.Categories;
 using InventoryManagement.Api.Features.Products;
@@ -16,6 +17,8 @@ builder.Services.ConfigureHttpJsonOptions(options =>
 {
     options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
 });
+
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 var app = builder.Build();
 

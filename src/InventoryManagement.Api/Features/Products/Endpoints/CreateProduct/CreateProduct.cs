@@ -1,3 +1,4 @@
+using FluentValidation;
 using InventoryManagement.Api.Data;
 using InventoryManagement.Api.Data.Entity;
 using InventoryManagement.Api.Features.Products.Constant;
@@ -14,10 +15,21 @@ public static class CreateProduct
                 "/",
                 async (
                     CreateProductRequest request,
+                    IValidator<CreateProductRequest> validator,
                     AppDbContext db,
                     CancellationToken cancellationToken
                 ) =>
                 {
+                    var validationResult = await validator.ValidateAsync(
+                        request,
+                        cancellationToken
+                    );
+
+                    if (!validationResult.IsValid)
+                    {
+                        return Results.ValidationProblem(validationResult.ToDictionary());
+                    }
+
                     var existingProductName = await db
                         .Products.AsNoTracking()
                         .AnyAsync(p => EF.Functions.ILike(p.Name, request.Name), cancellationToken);
