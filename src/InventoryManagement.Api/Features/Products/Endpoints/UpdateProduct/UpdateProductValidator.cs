@@ -6,11 +6,11 @@ public class UpdateProductValidator : AbstractValidator<UpdateProductRequest>
 {
     public UpdateProductValidator()
     {
-        RuleFor(x => x.Name).NotEmpty().MaximumLength(50);
+        RuleFor(x => x.Name).NotEmpty().MinimumLength(3).MaximumLength(50);
 
-        RuleFor(x => x.Sku).NotEmpty().MaximumLength(50);
+        RuleFor(x => x.Sku).NotEmpty().MinimumLength(3).MaximumLength(50);
 
-        RuleFor(x => x.Description).MaximumLength(100);
+        RuleFor(x => x.Description).MinimumLength(3).MaximumLength(100);
 
         RuleFor(x => x.Price).NotEmpty().GreaterThan(0);
 
