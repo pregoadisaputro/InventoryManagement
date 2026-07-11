@@ -6,7 +6,7 @@ public static class DashboardEndpoints
 {
     public static void MapDashboard(this IEndpointRouteBuilder app)
     {
-        var group = app.MapGroup("/dashboard");
+        var group = app.MapGroup("/dashboard").RequireAuthorization();
 
         group.MapGetDashboard();
     }
