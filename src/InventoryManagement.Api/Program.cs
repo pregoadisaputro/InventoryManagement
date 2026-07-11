@@ -6,6 +6,7 @@ using InventoryManagement.Api.Extensions;
 using InventoryManagement.Api.Features.Authentication;
 using InventoryManagement.Api.Features.Authentication.Services;
 using InventoryManagement.Api.Features.Categories;
+using InventoryManagement.Api.Features.Dashboard;
 using InventoryManagement.Api.Features.Products;
 using InventoryManagement.Api.Features.Suppliers;
 using InventoryManagement.Api.Features.Transactions;
@@ -72,6 +73,7 @@ app.UseAuthorization();
 
 app.MapAuthentication();
 app.MapUsers();
+app.MapDashboard();
 app.MapCategories();
 app.MapProducts();
 app.MapSuppliers();
