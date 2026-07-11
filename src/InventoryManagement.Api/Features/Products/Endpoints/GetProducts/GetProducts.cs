@@ -26,11 +26,41 @@ public static class GetProducts
                     };
                     var skip = (pageNumber - 1) * pageSize;
 
-                    var query = db.Products.AsNoTracking();
+                    var query = db.Products.AsNoTracking().AsQueryable();
 
                     if (!string.IsNullOrWhiteSpace(request.Name))
                     {
                         query = query.Where(p => EF.Functions.ILike(p.Name, $"%{request.Name}%"));
+                    }
+
+                    if (request.CategoryId is not null)
+                    {
+                        query = query.Where(p => p.CategoryId == request.CategoryId);
+                    }
+
+                    if (request.SupplierId is not null)
+                    {
+                        query = query.Where(p => p.SupplierId == request.SupplierId);
+                    }
+
+                    if (request.LowStock == true)
+                    {
+                        query = query.Where(p => p.Stock > 0 && p.Stock <= p.MinimumStock);
+                    }
+
+                    if (request.OutOfStock == true)
+                    {
+                        query = query.Where(p => p.Stock == 0);
+                    }
+
+                    if (request.MinPrice is not null)
+                    {
+                        query = query.Where(p => p.Price >= request.MinPrice);
+                    }
+
+                    if (request.MaxPrice is not null)
+                    {
+                        query = query.Where(p => p.Price <= request.MaxPrice);
                     }
 
                     var totalProducts = await query.CountAsync(cancellationToken);

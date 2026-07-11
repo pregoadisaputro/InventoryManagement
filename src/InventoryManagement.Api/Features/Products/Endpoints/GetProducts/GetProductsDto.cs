@@ -1,6 +1,16 @@
 namespace InventoryManagement.Api.Features.Products.Endpoints.GetProducts;
 
-public record GetProductsRequest(int PageNumber = 1, int PageSize = 5, string? Name = null);
+public record GetProductsRequest(
+    int PageNumber = 1,
+    int PageSize = 5,
+    string? Name = null,
+    int? CategoryId = null,
+    int? SupplierId = null,
+    bool? LowStock = null,
+    bool? OutOfStock = null,
+    decimal? MinPrice = null,
+    decimal? MaxPrice = null
+);
 
 public record GetProductsPage(
     int PageNumber,
