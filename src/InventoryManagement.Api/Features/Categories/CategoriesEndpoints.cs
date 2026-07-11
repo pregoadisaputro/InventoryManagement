@@ -1,4 +1,5 @@
 using InventoryManagement.Api.Features.Categories.Endpoints.CreateCategory;
+using InventoryManagement.Api.Features.Categories.Endpoints.DeleteCategory;
 using InventoryManagement.Api.Features.Categories.Endpoints.GetCategories;
 using InventoryManagement.Api.Features.Categories.Endpoints.GetCategory;
 
@@ -11,6 +12,8 @@ public static class CategoriesEndpoints
         var group = app.MapGroup("/categories").RequireAuthorization();
 
         group.MapCreateCategory();
+        group.MapDeleteCategory();
+
         group.MapGetCategories();
         group.MapGetCategory();
     }
