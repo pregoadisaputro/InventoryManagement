@@ -2,8 +2,8 @@ namespace InventoryManagement.Api.Features.Dashboard.Endpoints.GetDashboard;
 
 public record GetDashboardResponse(
     int TotalProducts,
-    IEnumerable<GetDashboardAlertsResponse> LowStockProducts,
-    IEnumerable<GetDashboardAlertsResponse> OutOfStockProducts,
+    IReadOnlyList<GetDashboardAlertsResponse> LowStockProducts,
+    IReadOnlyList<GetDashboardAlertsResponse> OutOfStockProducts,
     decimal TotalInventoryValue,
     int TotalCategories,
     int TotalSuppliers

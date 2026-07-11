@@ -7,7 +7,7 @@ public record GetProductsPage(
     int PageSize,
     int TotalItems,
     int TotalPages,
-    IEnumerable<GetProductsResponse> Data
+    IReadOnlyList<GetProductsResponse> Data
 );
 
 public record GetProductsResponse(
