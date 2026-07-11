@@ -14,15 +14,31 @@ public static class GetDashboard
                     var totalProducts = await db
                         .Products.AsNoTracking()
                         .CountAsync(cancellationToken);
+
                     var lowStockProducts = await db
                         .Products.AsNoTracking()
-                        .CountAsync(
-                            p => p.Stock > 0 && p.Stock <= p.MinimumStock,
-                            cancellationToken
-                        );
+                        .Where(p => p.Stock > 0 && p.Stock <= p.MinimumStock)
+                        .OrderBy(p => p.Stock)
+                        .Select(p => new GetDashboardAlertsResponse(
+                            p.Id,
+                            p.Name,
+                            p.Stock,
+                            p.MinimumStock
+                        ))
+                        .ToListAsync(cancellationToken);
+
                     var outOfStockProducts = await db
                         .Products.AsNoTracking()
-                        .CountAsync(p => p.Stock == 0, cancellationToken);
+                        .Where(p => p.Stock == 0)
+                        .OrderBy(p => p.Name)
+                        .Select(p => new GetDashboardAlertsResponse(
+                            p.Id,
+                            p.Name,
+                            p.Stock,
+                            p.MinimumStock
+                        ))
+                        .ToListAsync(cancellationToken);
+
                     var totalInventoryValue = await db
                         .Products.AsNoTracking()
                         .SumAsync(p => p.Price * p.Stock, cancellationToken);
