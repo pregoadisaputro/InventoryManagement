@@ -1,6 +1,7 @@
 using InventoryManagement.Api.Features.Suppliers.Endpoints.CreateSupplier;
 using InventoryManagement.Api.Features.Suppliers.Endpoints.DeleteSupplier;
 using InventoryManagement.Api.Features.Suppliers.Endpoints.GetSupplier;
+using InventoryManagement.Api.Features.Suppliers.Endpoints.GetSuppliers;
 using InventoryManagement.Api.Features.Suppliers.Endpoints.UpdateSupplier;
 
 namespace InventoryManagement.Api.Features.Suppliers;
@@ -16,5 +17,6 @@ public static class SuppliersEndpoints
         group.MapDeleteSupplier();
 
         group.MapGetSupplier();
+        group.MapGetSuppliers();
     }
 }
