@@ -10,6 +10,6 @@ public class CreateTransactionValidator : AbstractValidator<CreateTransactionReq
 
         RuleFor(x => x.Quantity).NotEmpty().GreaterThan(0);
 
-        RuleFor(x => x.Type).NotEmpty();
+        RuleFor(x => x.Type).IsInEnum();
     }
 }
