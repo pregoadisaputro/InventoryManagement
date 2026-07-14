@@ -12,11 +12,33 @@ public static class DeleteSupplier
                 "/{id:int}",
                 async (int id, AppDbContext db, CancellationToken cancellationToken) =>
                 {
-                    await db.Suppliers.Where(s => s.Id == id).ExecuteDeleteAsync(cancellationToken);
+                    var supplier = await db.Suppliers.FindAsync([id], cancellationToken);
+
+                    if (supplier is null)
+                    {
+                        return Results.NotFound($"Supplier with ID {id} was not found.");
+                    }
+
+                    var hasProducts = await db.Products.AnyAsync(
+                        p => p.SupplierId == id,
+                        cancellationToken
+                    );
+
+                    if (hasProducts)
+                    {
+                        return Results.Conflict(
+                            "Cannot delete supplier because it is used by one or more products."
+                        );
+                    }
+
+                    db.Suppliers.Remove(supplier);
+                    await db.SaveChangesAsync(cancellationToken);
 
                     return Results.NoContent();
                 }
             )
+            .Produces(StatusCodes.Status404NotFound)
+            .Produces(StatusCodes.Status409Conflict)
             .Produces(StatusCodes.Status204NoContent);
     }
 }
