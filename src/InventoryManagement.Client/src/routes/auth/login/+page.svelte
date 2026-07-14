@@ -1,4 +1,6 @@
 <script>
+	import { goto } from '$app/navigation';
+
 	let username = $state('');
 	let password = $state('');
 	let errorMsg = $state('');
@@ -16,6 +18,8 @@
 			errorMsg = await response.text();
 			return;
 		}
+
+		goto('/products');
 	}
 </script>
 
