@@ -4,8 +4,6 @@ import { API_URL } from '$lib/api/apiUrl';
 export async function serverApi(path, cookies, options = {}) {
 	const token = cookies.get('token');
 
-	console.log('token:', token);
-
 	const response = await fetch(`${API_URL}${path}`, {
 		...options,
 		headers: {
