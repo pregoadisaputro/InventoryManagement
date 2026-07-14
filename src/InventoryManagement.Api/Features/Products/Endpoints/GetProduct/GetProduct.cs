@@ -24,6 +24,7 @@ public static class GetProduct
                             p.Price,
                             p.Stock,
                             p.MinimumStock,
+                            p.ImgUrl,
                             p.CategoryId,
                             p.Category.Name,
                             p.SupplierId,

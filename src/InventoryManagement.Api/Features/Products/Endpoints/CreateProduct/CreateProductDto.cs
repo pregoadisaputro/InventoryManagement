@@ -7,6 +7,7 @@ public record CreateProductRequest(
     decimal Price,
     int Stock,
     int MinimumStock,
+    string? ImgUrl,
     int CategoryId,
     int? SupplierId
 );
@@ -19,6 +20,7 @@ public record CreateProductResponse(
     decimal Price,
     int Stock,
     int MinimumStock,
+    string? ImgUrl,
     int CategoryId,
     int? SupplierId,
     DateTimeOffset CreatedAt,

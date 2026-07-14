@@ -11,6 +11,8 @@ public class Product
     public int Stock { get; set; }
     public int MinimumStock { get; set; }
 
+    public string? ImgUrl { get; set; }
+
     public int CategoryId { get; set; }
     public Category Category { get; set; } = null!;
 

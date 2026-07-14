@@ -92,6 +92,7 @@ public static class UpdateProduct
                     existingProduct.Description = request.Description;
                     existingProduct.Price = request.Price;
                     existingProduct.MinimumStock = request.MinimumStock;
+                    existingProduct.ImgUrl = request.ImgUrl;
                     existingProduct.CategoryId = request.CategoryId;
                     existingProduct.SupplierId = request.SupplierId;
                     existingProduct.UpdatedAt = DateTimeOffset.UtcNow;

@@ -28,6 +28,7 @@ public record GetProductsResponse(
     decimal Price,
     int Stock,
     int MinimumStock,
+    string? ImgUrl,
     int CategoryId,
     string CategoryName,
     int? SupplierId,

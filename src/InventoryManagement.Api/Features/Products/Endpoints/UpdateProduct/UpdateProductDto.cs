@@ -6,6 +6,7 @@ public record UpdateProductRequest(
     string? Description,
     decimal Price,
     int MinimumStock,
+    string? ImgUrl,
     int CategoryId,
     int? SupplierId
 );

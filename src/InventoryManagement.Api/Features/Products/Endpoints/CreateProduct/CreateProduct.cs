@@ -59,7 +59,7 @@ public static class CreateProduct
                         );
                     }
 
-                    if (request.SupplierId is not null)
+                    if (request.SupplierId.HasValue)
                     {
                         var existingSupplier = await db
                             .Suppliers.AsNoTracking()
@@ -99,6 +99,7 @@ public static class CreateProduct
                             newProduct.Price,
                             newProduct.Stock,
                             newProduct.MinimumStock,
+                            newProduct.ImgUrl,
                             newProduct.CategoryId,
                             newProduct.SupplierId,
                             newProduct.CreatedAt,

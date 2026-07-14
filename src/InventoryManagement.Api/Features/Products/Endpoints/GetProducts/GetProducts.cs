@@ -33,12 +33,12 @@ public static class GetProducts
                         query = query.Where(p => EF.Functions.ILike(p.Name, $"%{request.Name}%"));
                     }
 
-                    if (request.CategoryId is not null)
+                    if (request.CategoryId.HasValue)
                     {
                         query = query.Where(p => p.CategoryId == request.CategoryId);
                     }
 
-                    if (request.SupplierId is not null)
+                    if (request.SupplierId.HasValue)
                     {
                         query = query.Where(p => p.SupplierId == request.SupplierId);
                     }
@@ -53,12 +53,12 @@ public static class GetProducts
                         query = query.Where(p => p.Stock == 0);
                     }
 
-                    if (request.MinPrice is not null)
+                    if (request.MinPrice.HasValue)
                     {
                         query = query.Where(p => p.Price >= request.MinPrice);
                     }
 
-                    if (request.MaxPrice is not null)
+                    if (request.MaxPrice.HasValue)
                     {
                         query = query.Where(p => p.Price <= request.MaxPrice);
                     }
@@ -78,6 +78,7 @@ public static class GetProducts
                             p.Price,
                             p.Stock,
                             p.MinimumStock,
+                            p.ImgUrl,
                             p.CategoryId,
                             p.Category.Name,
                             p.SupplierId,
