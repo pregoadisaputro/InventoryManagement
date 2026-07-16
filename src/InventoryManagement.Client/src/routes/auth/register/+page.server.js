@@ -17,10 +17,11 @@ export const actions = {
 		} catch (err) {
 			return fail(err.status || 400, {
 				username,
-				errMsg: err.body?.message || 'Failed to register'
+				title: err.body?.title,
+				errors: err.body?.errors ?? {}
 			});
 		}
 
-		throw redirect(303, `${AUTH_URL}/login`);
+		throw redirect(303, '/auth/login');
 	}
 };
