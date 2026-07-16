@@ -1,33 +1,42 @@
 <script>
-	import { goto } from '$app/navigation';
+	import { enhance } from '$app/forms';
 
-	let username = $state('');
-	let password = $state('');
-	let errorMsg = $state('');
-
-	async function handleLogin() {
-		errorMsg = '';
-
-		const response = await fetch('/auth/login', {
-			method: 'POST',
-			headers: { 'Content-Type': 'application/json' },
-			body: JSON.stringify({ username, password })
-		});
-
-		if (!response.ok) {
-			errorMsg = await response.text();
-			return;
-		}
-
-		goto('/products');
-	}
+	let { form } = $props();
+	let isSubmitting = $state(false);
 </script>
 
-{#if errorMsg}
-	<p>{errorMsg}</p>
+<h1>Login</h1>
+
+{#if form?.errorMsg}
+	<p style="color: red;">{form.errorMsg}</p>
 {/if}
 
-<input bind:value={username} placeholder="username" />
-<input bind:value={password} placeholder="password" type="password" />
+<form
+	method="POST"
+	use:enhance={() => {
+		isSubmitting = true;
+		return async ({ update }) => {
+			isSubmitting = false;
+			await update();
+		};
+	}}
+	<input
+	name="username"
+	placeholder="username"
+	required
+>
+	<input name="password" type="password" placeholder="password" required />
+	>
 
-<button onclick={handleLogin}>login</button>
+	<button type="submit" disabled={isSubmitting}>
+		{isSubmitting ? 'login...' : 'Login'}
+	</button>
+</form>
+
+<style>
+	form {
+		display: flex;
+		gap: 0.75rem;
+		max-width: 400px;
+	}
+</style>
