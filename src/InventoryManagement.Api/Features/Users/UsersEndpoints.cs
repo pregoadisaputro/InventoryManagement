@@ -1,3 +1,4 @@
+using InventoryManagement.Api.Features.Users.Endpoints.GetCurrentUser;
 using InventoryManagement.Api.Features.Users.Endpoints.GetUser;
 
 namespace InventoryManagement.Api.Features.Users;
@@ -9,5 +10,6 @@ public static class UserEndpoints
         var group = app.MapGroup("/users").RequireAuthorization();
 
         group.MapGetUser();
+        group.MapGetCurrentUser();
     }
 }
