@@ -1,10 +1,18 @@
 <script>
 	import { goto } from '$app/navigation';
+	import Button from '$lib/components/Button.svelte';
+	import Card from '$lib/components/Card.svelte';
+
 	let { data } = $props();
 </script>
 
-<h1 class="text-4xl font-bold text-blue-500">Inventory Management</h1>
-
 {#if !data.user}
-	<button onclick={() => goto('/auth/login')}>login</button>
+	<div class="flex min-h-screen items-center justify-center">
+		<Card title="Freego Inventory Management">
+			<div class="flex flex-col gap-2">
+				<Button title="Login" onclick={() => goto('/auth/login')} />
+				<Button title="Register" onclick={() => goto('/auth/register')} />
+			</div>
+		</Card>
+	</div>
 {/if}
