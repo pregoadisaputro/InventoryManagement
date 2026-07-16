@@ -28,6 +28,7 @@ export const actions = {
 			});
 		} catch (err) {
 			return fail(err.status || 400, {
+				username,
 				errMsg: err.body?.message || 'Failed to login'
 			});
 		}
