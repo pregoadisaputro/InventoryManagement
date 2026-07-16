@@ -8,7 +8,7 @@ export const actions = {
 		const formData = await request.formData();
 
 		const username = formData.get('username')?.toString().trim() || '';
-		const password = formData.get('password')?.toString().trim() || '';
+		const password = formData.get('password')?.toString() || '';
 
 		try {
 			const data = await serverApi(`${AUTH_URL}/login`, cookies, {

@@ -23,28 +23,26 @@
 				isSubmitting = true;
 
 				return async ({ update }) => {
-					isSubmitting = false;
 					await update();
+					isSubmitting = false;
 				};
 			}}
 		>
-			<div>
-				<input
-					class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-black focus:outline-none"
-					name="username"
-					value={form?.username ?? ''}
-					placeholder="Enter username"
-					required
-				/>
+			<input
+				class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-black focus:outline-none"
+				name="username"
+				value={form?.username ?? ''}
+				placeholder="Enter username"
+				required
+			/>
 
-				{#if form?.errors?.Username}
-					<div class="mt-1 space-y-1">
-						{#each form.errors.Username as error (error)}
-							<p class="text-sm text-red-500">{error}</p>
-						{/each}
-					</div>
-				{/if}
-			</div>
+			{#if form?.errors?.Username}
+				<div class="mt-1 space-y-1">
+					{#each form.errors.Username as error (error)}
+						<p class="text-sm text-red-500">{error}</p>
+					{/each}
+				</div>
+			{/if}
 
 			<div>
 				<input
