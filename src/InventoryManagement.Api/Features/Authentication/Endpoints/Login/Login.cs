@@ -42,7 +42,10 @@ public static class Login
 
                     if (user is null)
                     {
-                        return Results.Unauthorized();
+                        return Results.Json(
+                            new { title = "Invalid username or password" },
+                            statusCode: StatusCodes.Status401Unauthorized
+                        );
                     }
 
                     var validPassword = BCrypt.Net.BCrypt.Verify(
@@ -52,7 +55,10 @@ public static class Login
 
                     if (!validPassword)
                     {
-                        return Results.Unauthorized();
+                        return Results.Json(
+                            new { title = "Invalid Password or password" },
+                            statusCode: StatusCodes.Status401Unauthorized
+                        );
                     }
 
                     var token = jwtService.GenerateToken(user);
