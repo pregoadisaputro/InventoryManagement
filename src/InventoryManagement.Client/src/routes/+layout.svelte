@@ -2,10 +2,12 @@
 	let { data, children } = $props();
 </script>
 
-<header>
+<nav>
 	{#if data.user}
 		<p>welcome, {data.user.username}</p>
 	{/if}
-</header>
+</nav>
 
-{@render children()}
+<main>
+	{@render children()}
+</main>

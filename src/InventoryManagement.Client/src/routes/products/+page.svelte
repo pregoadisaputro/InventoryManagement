@@ -11,6 +11,10 @@
 	}
 </script>
 
+<h1>products</h1>
+
+<p>hello, {data.user.username}</p>
+
 {#if page.data}
 	{#each page.data as p (p.id)}
 		<h1>{p.name}</h1>

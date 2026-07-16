@@ -20,13 +20,9 @@
 			await update();
 		};
 	}}
-	<input
-	name="username"
-	placeholder="username"
-	required
 >
+	<input name="username" placeholder="username" required />
 	<input name="password" type="password" placeholder="password" required />
-	>
 
 	<button type="submit" disabled={isSubmitting}>
 		{isSubmitting ? 'login...' : 'Login'}

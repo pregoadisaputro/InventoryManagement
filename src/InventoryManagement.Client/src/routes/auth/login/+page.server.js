@@ -11,7 +11,7 @@ export const actions = {
 		const password = formData.get('password')?.toString().trim() || '';
 
 		try {
-			const data = await serverApi(AUTH_URL, cookies, {
+			const data = await serverApi(`${AUTH_URL}/login`, cookies, {
 				method: 'POST',
 				body: JSON.stringify({
 					username,
