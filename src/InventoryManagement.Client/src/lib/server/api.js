@@ -1,8 +1,7 @@
-import { error } from '@sveltejs/kit';
 import { API_URL } from '$lib/api/apiUrl';
 
 export async function serverApi(path, cookies, options = {}) {
-	const token = cookies.get('token');
+	const token = cookies?.get('token');
 
 	const response = await fetch(`${API_URL}${path}`, {
 		...options,
@@ -14,7 +13,20 @@ export async function serverApi(path, cookies, options = {}) {
 	});
 
 	if (!response.ok) {
-		throw error(response.status, await response.text());
+		let body;
+
+		try {
+			body = await response.json();
+		} catch {
+			body = {
+				title: await response.text()
+			};
+		}
+
+		throw {
+			status: response.status,
+			body
+		};
 	}
 
 	return response.json();
