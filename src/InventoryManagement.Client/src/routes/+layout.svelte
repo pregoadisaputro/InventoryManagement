@@ -1,4 +1,6 @@
 <script>
+	import './layout.css';
+
 	let { data, children } = $props();
 </script>
 
@@ -8,6 +10,4 @@
 	{/if}
 </nav>
 
-<main>
-	{@render children()}
-</main>
+<main>{@render children()}</main>
