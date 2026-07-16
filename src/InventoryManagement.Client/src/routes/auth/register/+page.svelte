@@ -9,7 +9,7 @@
 	let password = $state('');
 	let isSubmitting = $state(false);
 
-	const requirements = $derived(() => [
+	const requirements = $derived([
 		{
 			text: 'At least 8 characters',
 			valid: password.length >= 8

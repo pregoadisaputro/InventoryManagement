@@ -7,10 +7,10 @@ export const actions = {
 		const formData = await request.formData();
 
 		const username = formData.get('username')?.toString().trim() || '';
-		const password = formData.get('password')?.toString().trim() || '';
+		const password = formData.get('password')?.toString() || '';
 
 		try {
-			await serverApi(`${AUTH_URL}/register`, {
+			await serverApi(`${AUTH_URL}/register`, null, {
 				method: 'POST',
 				body: JSON.stringify({ username, password })
 			});
