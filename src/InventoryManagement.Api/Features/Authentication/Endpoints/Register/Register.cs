@@ -38,7 +38,10 @@ public static class Register
 
                     if (existingUsername)
                     {
-                        return Results.Conflict("Username already exist.");
+                        return Results.Json(
+                            new { title = "Username is already taken." },
+                            statusCode: StatusCodes.Status409Conflict
+                        );
                     }
 
                     var newUser = new User
