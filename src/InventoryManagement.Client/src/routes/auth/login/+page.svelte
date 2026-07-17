@@ -10,12 +10,6 @@
 
 <div class="flex min-h-screen items-center justify-center">
 	<Card title="Freego Inventory Management" description="Sign in to your account">
-		{#if form?.title}
-			<p class="rounded-md bg-red-50 p-3 text-sm text-red-600">
-				{form.title}
-			</p>
-		{/if}
-
 		<form
 			class="flex flex-col gap-4"
 			method="POST"
@@ -36,14 +30,6 @@
 				required
 			/>
 
-			{#if form?.errors?.Username}
-				<div class="mt-1 space-y-1">
-					{#each form.errors.Username as error (error)}
-						<p class="text-sm text-red-500">{error}</p>
-					{/each}
-				</div>
-			{/if}
-
 			<div>
 				<input
 					class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-black focus:outline-none"
@@ -52,14 +38,6 @@
 					placeholder="Enter password"
 					required
 				/>
-
-				{#if form?.errors?.Password}
-					<div class="mt-1 space-y-1">
-						{#each form.errors.Password as error (error)}
-							<p class="text-sm text-red-500">{error}</p>
-						{/each}
-					</div>
-				{/if}
 			</div>
 
 			<Button title={isSubmitting ? 'Signing in...' : 'Sign in'} disabled={isSubmitting} />

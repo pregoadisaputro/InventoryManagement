@@ -37,12 +37,6 @@
 
 <div class="flex min-h-screen items-center justify-center">
 	<Card title="Freego Inventory Management" description="Register">
-		{#if form?.title}
-			<p class="text-red-500">
-				{form.title}
-			</p>
-		{/if}
-
 		<form
 			class="flex flex-col gap-4"
 			method="POST"
@@ -62,16 +56,6 @@
 				placeholder="Enter username"
 				required
 			/>
-
-			{#if form?.errors?.Username}
-				<div class="space-y-1">
-					{#each form.errors.Username as error (error)}
-						<p class="text-sm text-red-500">
-							{error}
-						</p>
-					{/each}
-				</div>
-			{/if}
 
 			<input
 				class="w-full rounded-md border border-gray-300 px-3 py-2 focus:border-black focus:outline-none"
