@@ -7,10 +7,8 @@
 
 <Sidebar.Provider>
 	<AppSidebar />
-
-	<Sidebar.Inset>
-		<main class="p-6">
-			{@render children()}
-		</main>
-	</Sidebar.Inset>
+	<main class="min-w-0 flex-1 p-4">
+		<Sidebar.Trigger />
+		{@render children?.()}
+	</main>
 </Sidebar.Provider>

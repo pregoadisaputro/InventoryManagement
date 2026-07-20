@@ -9,7 +9,7 @@
 	let dashboard = $derived(data.dashboard);
 </script>
 
-<div class="grid grid-cols-1 gap-5 sm:grid-cols-2 xl:grid-cols-4">
+<div class="mt-2 grid w-full grid-cols-[repeat(auto-fit,minmax(210px,1fr))] gap-4">
 	<StatsCard
 		title="Total Products"
 		value={dashboard.totalProducts}
