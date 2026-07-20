@@ -15,7 +15,6 @@
 			method="POST"
 			use:enhance={() => {
 				isSubmitting = true;
-
 				return async ({ update }) => {
 					await update();
 					isSubmitting = false;
