@@ -1,3 +1,5 @@
+using System.ComponentModel.DataAnnotations;
+
 namespace InventoryManagement.Api.Data.Entity;
 
 public class Product
@@ -23,4 +25,7 @@ public class Product
 
     public DateTimeOffset CreatedAt { get; set; } = DateTimeOffset.UtcNow;
     public DateTimeOffset UpdatedAt { get; set; } = DateTimeOffset.UtcNow;
+
+    [Timestamp]
+    public uint Version { get; set; }
 }

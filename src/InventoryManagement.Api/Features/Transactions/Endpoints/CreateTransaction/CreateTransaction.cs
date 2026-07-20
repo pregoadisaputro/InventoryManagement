@@ -95,7 +95,17 @@ public static class CreateTransaction
                     };
 
                     db.Transactions.Add(transaction);
-                    await db.SaveChangesAsync(cancellationToken);
+
+                    try
+                    {
+                        await db.SaveChangesAsync(cancellationToken);
+                    }
+                    catch (DbUpdateConcurrencyException)
+                    {
+                        return Results.Conflict(
+                            "This product was updated by another request. Please retry with the latest data."
+                        );
+                    }
 
                     return Results.CreatedAtRoute(
                         TransactionsEndpointsNames.GetTransaction,
@@ -114,6 +124,7 @@ public static class CreateTransaction
             )
             .Produces<CreateTransactionResponse>(StatusCodes.Status201Created)
             .Produces(StatusCodes.Status404NotFound)
-            .Produces(StatusCodes.Status400BadRequest);
+            .Produces(StatusCodes.Status400BadRequest)
+            .Produces(StatusCodes.Status409Conflict);
     }
 }
