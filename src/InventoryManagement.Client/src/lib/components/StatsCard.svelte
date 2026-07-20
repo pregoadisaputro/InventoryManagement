@@ -3,19 +3,19 @@
 </script>
 
 <div
-	class="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition hover:shadow-md"
+	class="flex items-center justify-between rounded-xl border border-gray-200 bg-white p-4 shadow-sm transition hover:shadow-md"
 >
-	<div>
-		<p class="text-sm text-gray-500">
+	<div class="min-w-0">
+		<p class="truncate text-sm text-gray-500">
 			{title}
 		</p>
 
-		<h2 class="mt-1 text-4xl leading-none font-bold">
+		<h2 class="mt-1 text-2xl leading-none font-bold">
 			{value}
 		</h2>
 	</div>
 
-	<div class="rounded-xl bg-gray-100 p-3">
-		<Icon class={`size-6 ${iconClass}`} />
+	<div class="shrink-0 rounded-lg bg-gray-100 p-2.5">
+		<Icon class={`size-5 ${iconClass}`} />
 	</div>
 </div>
