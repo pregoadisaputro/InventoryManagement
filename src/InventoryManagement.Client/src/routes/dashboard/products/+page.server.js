@@ -20,12 +20,13 @@ export async function load({ url, cookies }) {
 		suppliers
 	};
 }
+
 export const actions = {
 	default: async ({ request, cookies }) => {
 		const formData = await request.formData();
 
-		const name = formData.get('name')?.toString() || '';
-		const sku = formData.get('sku')?.toString() || '';
+		const name = formData.get('name')?.toString().trim() || '';
+		const sku = formData.get('sku')?.toString().trim() || '';
 
 		const description = formData.get('description')?.toString().trim() || null;
 		const imgUrl = formData.get('imgUrl')?.toString().trim() || null;
