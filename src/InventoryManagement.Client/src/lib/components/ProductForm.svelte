@@ -2,10 +2,26 @@
 	import { enhance } from '$app/forms';
 	import * as Dialog from '$lib/components/ui/dialog';
 
+	let isSubmitting = $state(false);
+
 	let { product = null, categories = [], suppliers = [] } = $props();
 </script>
 
-<form method="POST" use:enhance class="space-y-6">
+<form
+	class="flex flex-col gap-4"
+	method="POST"
+	use:enhance={() => {
+		isSubmitting = true;
+		return async ({ update }) => {
+			await update();
+			isSubmitting = false;
+		};
+	}}
+>
+	{#if product}
+		<input type="hidden" name="id" value={product.id} />
+	{/if}
+
 	<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
 		<div>
 			<label for="name" class="mb-1 block text-sm font-medium"> Name </label>
@@ -126,7 +142,8 @@
 		<label for="description" class="mb-1 block text-sm font-medium">Description</label>
 
 		<textarea id="description" name="description" rows="4" class="w-full rounded-md border p-2"
-		></textarea>
+			>{product?.description ?? ''}</textarea
+		>
 	</div>
 
 	<div class="flex justify-end gap-2 border-t pt-4">
@@ -134,8 +151,16 @@
 			<button type="button" class="rounded-md border px-4 py-2"> Cancel </button>
 		</Dialog.Close>
 
-		<button type="submit" class="rounded-md bg-black px-4 py-2 text-white"
-			>{product ? 'Save Changes' : 'Create Product'}</button
+		<button
+			type="submit"
+			class="rounded-md bg-black px-4 py-2 text-white disabled:cursor-not-allowed disabled:opacity-50"
+			disabled={isSubmitting}
 		>
+			{#if isSubmitting}
+				{product ? 'Saving...' : 'Creating...'}
+			{:else}
+				{product ? 'Save Changes' : 'Create Product'}
+			{/if}
+		</button>
 	</div>
 </form>
