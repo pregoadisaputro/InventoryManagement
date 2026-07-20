@@ -2,7 +2,7 @@
 	import { enhance } from '$app/forms';
 	import * as Dialog from '$lib/components/ui/dialog';
 
-	let { categories = [], suppliers = [] } = $props();
+	let { product = null, categories = [], suppliers = [] } = $props();
 </script>
 
 <form method="POST" use:enhance class="space-y-6">
@@ -10,13 +10,25 @@
 		<div>
 			<label for="name" class="mb-1 block text-sm font-medium"> Name </label>
 
-			<input id="name" name="name" class="w-full rounded-md border p-2" required />
+			<input
+				id="name"
+				value={product?.name ?? ''}
+				name="name"
+				class="w-full rounded-md border p-2"
+				required
+			/>
 		</div>
 
 		<div>
 			<label for="sku" class="mb-1 block text-sm font-medium"> SKU </label>
 
-			<input id="sku" name="sku" class="w-full rounded-md border p-2" required />
+			<input
+				id="sku"
+				value={product?.sku ?? ''}
+				name="sku"
+				class="w-full rounded-md border p-2"
+				required
+			/>
 		</div>
 
 		<div>
@@ -24,6 +36,7 @@
 
 			<input
 				id="price"
+				value={product?.price ?? 0}
 				type="number"
 				step="0.01"
 				name="price"
@@ -35,7 +48,14 @@
 		<div>
 			<label for="stock" class="mb-1 block text-sm font-medium"> Stock </label>
 
-			<input id="stock" type="number" name="stock" class="w-full rounded-md border p-2" required />
+			<input
+				id="stock"
+				value={product?.stock ?? 0}
+				type="number"
+				name="stock"
+				class="w-full rounded-md border p-2"
+				required
+			/>
 		</div>
 
 		<div>
@@ -43,6 +63,7 @@
 
 			<input
 				id="minimumStock"
+				value={product?.minimumStock ?? 5}
 				type="number"
 				name="minimumStock"
 				class="w-full rounded-md border p-2"
@@ -53,13 +74,24 @@
 		<div>
 			<label for="imgUrl" class="mb-1 block text-sm font-medium"> Image URL </label>
 
-			<input id="imgUrl" name="imgUrl" class="w-full rounded-md border p-2" />
+			<input
+				id="imgUrl"
+				value={product?.imgUrl ?? ''}
+				name="imgUrl"
+				class="w-full rounded-md border p-2"
+			/>
 		</div>
 
 		<div>
 			<label for="categoryId" class="mb-1 block text-sm font-medium"> Category </label>
 
-			<select id="categoryId" name="categoryId" class="w-full rounded-md border p-2" required>
+			<select
+				id="categoryId"
+				value={product?.categoryId}
+				name="categoryId"
+				class="w-full rounded-md border p-2"
+				required
+			>
 				<option value="">Select Category</option>
 
 				{#each categories as category (category.id)}
@@ -73,7 +105,12 @@
 		<div>
 			<label for="supplierId" class="mb-1 block text-sm font-medium">Supplier</label>
 
-			<select id="supplierId" name="supplierId" class="w-full rounded-md border p-2">
+			<select
+				id="supplierId"
+				value={product?.supplierId ?? ''}
+				name="supplierId"
+				class="w-full rounded-md border p-2"
+			>
 				<option value="">No Supplier</option>
 
 				{#each suppliers as supplier (supplier.id)}
@@ -97,6 +134,8 @@
 			<button type="button" class="rounded-md border px-4 py-2"> Cancel </button>
 		</Dialog.Close>
 
-		<button type="submit" class="rounded-md bg-black px-4 py-2 text-white">Create Product</button>
+		<button type="submit" class="rounded-md bg-black px-4 py-2 text-white"
+			>{product ? 'Save Changes' : 'Create Product'}</button
+		>
 	</div>
 </form>
