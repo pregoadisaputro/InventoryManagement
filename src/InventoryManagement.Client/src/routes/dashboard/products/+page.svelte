@@ -10,6 +10,17 @@
 	let suppliers = $derived(data.suppliers);
 
 	let open = $state(false);
+	let editingProduct = $state(null);
+
+	function createProduct() {
+		editingProduct = null;
+		open = true;
+	}
+
+	function editProduct(product) {
+		editingProduct = product;
+		open = true;
+	}
 
 	function previousPage() {
 		goto(`/dashboard/products?pageNumber=${page.pageNumber - 1}&pageSize=${page.pageSize}`);
@@ -24,7 +35,9 @@
 	<h1 class="text-2xl font-bold">Products</h1>
 
 	<Dialog.Root bind:open>
-		<Dialog.Trigger class="rounded bg-black px-4 py-2 text-white">Add Product</Dialog.Trigger>
+		<button class="rounded bg-black px-4 py-2 text-white" onclick={createProduct}
+			>Add product</button
+		>
 
 		<Dialog.Content class="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
 			<Dialog.Header>
@@ -33,7 +46,7 @@
 				<Dialog.Description>Add a new product to your inventory.</Dialog.Description>
 			</Dialog.Header>
 
-			<ProductForm {categories} {suppliers} />
+			<ProductForm product={editingProduct} {categories} {suppliers} />
 		</Dialog.Content>
 	</Dialog.Root>
 </div>
@@ -48,6 +61,8 @@
 		<p>${p.price}</p>
 		<p>{p.stock}</p>
 		<p>{p.minimumStock}</p>
+
+		<button onclick={() => editProduct(p)}>Edit</button>
 	{/each}
 {/if}
 
