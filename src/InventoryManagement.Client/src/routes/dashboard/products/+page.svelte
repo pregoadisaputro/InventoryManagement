@@ -41,9 +41,13 @@
 
 		<Dialog.Content class="max-h-[90vh] overflow-y-auto sm:max-w-3xl">
 			<Dialog.Header>
-				<Dialog.Title>Create Product</Dialog.Title>
+				<Dialog.Title>{editingProduct ? 'Edit Product' : 'Create Product'}</Dialog.Title>
 
-				<Dialog.Description>Add a new product to your inventory.</Dialog.Description>
+				<Dialog.Description
+					>{editingProduct
+						? 'Update the details of this product.'
+						: 'Add a new product to your inventory.'}</Dialog.Description
+				>
 			</Dialog.Header>
 
 			<ProductForm product={editingProduct} {categories} {suppliers} />
