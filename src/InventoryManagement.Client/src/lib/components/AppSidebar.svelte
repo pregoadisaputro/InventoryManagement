@@ -5,7 +5,6 @@
 	import { ScrollText } from '@lucide/svelte';
 	import SettingsIcon from '@lucide/svelte/icons/settings';
 	import * as Sidebar from '$lib/components/ui/sidebar/index.js';
-
 	const items = [
 		{
 			title: 'Dashboard',
@@ -38,15 +37,20 @@
 <Sidebar.Root>
 	<Sidebar.Content>
 		<Sidebar.Group>
-			<Sidebar.GroupLabel>Freego Inventory Management</Sidebar.GroupLabel>
+			<div class="flex flex-col">
+				<Sidebar.GroupLabel class="flex gap-2 text-[20px] text-black"
+					><Package /> Freego</Sidebar.GroupLabel
+				>
+				<Sidebar.GroupLabel class="text-sm">Inventory Management</Sidebar.GroupLabel>
+			</div>
 			<Sidebar.GroupContent>
 				<Sidebar.Menu>
 					{#each items as item (item.title)}
 						<Sidebar.MenuItem>
-							<Sidebar.MenuButton>
+							<Sidebar.MenuButton class="h-10 text-base">
 								{#snippet child({ props })}
 									<a href={item.url} {...props}>
-										<item.icon />
+										<item.icon class="size-5" />
 										<span>{item.title}</span>
 									</a>
 								{/snippet}
