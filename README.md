@@ -145,3 +145,7 @@ Stock changes are never made by directly editing a product's `Stock` field — t
 - Calculates the new stock based on transaction type (`StockIn`, `StockOut`, `Adjustment`)
 - Rejects `StockOut` requests that would drop stock below zero
 - Writes an `InventoryTransaction` record alongside the updated product, in the same `SaveChangesAsync` call
+
+### Concurrency handling
+
+`Product` uses optimistic concurrency via a `Version` property (`uint`, `[Timestamp]`) mapped to PostgreSQL's built-in `xmin` system column, which Postgres automatically updates on every row change. If two requests read the same product and both try to save a stock update, the second one's `UPDATE` will affect zero rows (since the `xmin` it read is now stale), EF Core throws `DbUpdateConcurrencyException`, and the endpoint returns `409 Conflict` instead of silently overwriting the first request's change.
