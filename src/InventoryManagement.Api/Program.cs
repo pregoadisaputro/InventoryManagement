@@ -71,11 +71,14 @@ builder.Services.AddCors(options =>
 
 var app = builder.Build();
 
-app.MapOpenApi();
-app.MapScalarApiReference(options =>
+if (app.Environment.IsDevelopment())
 {
-    options.WithTitle("Freego Inventory Management");
-});
+    app.MapOpenApi();
+    app.MapScalarApiReference(options =>
+    {
+        options.WithTitle("Freego Inventory Management");
+    });
+}
 
 if (!app.Environment.IsProduction())
 {
