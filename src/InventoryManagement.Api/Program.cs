@@ -80,8 +80,12 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+if (!app.Environment.IsProduction())
+{
+    app.UseHttpsRedirection();
+}
+
 await app.MigrateDatabaseAsync();
-app.UseHttpsRedirection();
 app.UseExceptionHandler();
 
 app.UseCors("Client");
