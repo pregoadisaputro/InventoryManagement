@@ -5,6 +5,8 @@ obj/
 .gitignore
 .gitattributes
 
+.env
+
 .vscode/
 .vs/
 
