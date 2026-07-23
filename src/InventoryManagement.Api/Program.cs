@@ -11,11 +11,15 @@ using InventoryManagement.Api.Features.Products;
 using InventoryManagement.Api.Features.Suppliers;
 using InventoryManagement.Api.Features.Transactions;
 using InventoryManagement.Api.Features.Users;
+using InventoryManagement.Api.Shared.ErrorHandling;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
+
+builder.Services.AddProblemDetails().AddExceptionHandler<GlobalExceptionHandler>();
+builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 builder.Services.AddOpenApi(options =>
 {
@@ -23,13 +27,6 @@ builder.Services.AddOpenApi(options =>
 });
 
 builder.Services.AddInfrastructure(builder.Configuration);
-
-builder.Services.ConfigureHttpJsonOptions(options =>
-{
-    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
-});
-
-builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
 builder.Services.AddScoped<IJwtService, JwtService>();
 
@@ -54,6 +51,11 @@ builder
     });
 
 builder.Services.AddAuthorization();
+
+builder.Services.ConfigureHttpJsonOptions(options =>
+{
+    options.SerializerOptions.Converters.Add(new JsonStringEnumConverter());
+});
 
 builder.Services.AddCors(options =>
 {
