@@ -2,6 +2,7 @@ using System.Text;
 using System.Text.Json.Serialization;
 using FluentValidation;
 using InventoryManagement.Api.Data.Configuration;
+using InventoryManagement.Api.Data.Extensions;
 using InventoryManagement.Api.Extensions;
 using InventoryManagement.Api.Features.Authentication;
 using InventoryManagement.Api.Features.Authentication.Services;
@@ -79,6 +80,7 @@ if (app.Environment.IsDevelopment())
     });
 }
 
+await app.MigrateDatabaseAsync();
 app.UseHttpsRedirection();
 app.UseExceptionHandler();
 
