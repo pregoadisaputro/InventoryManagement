@@ -8,10 +8,6 @@ obj/
 .vscode/
 .vs/
 
-Dockerfile
-docker-compose.yml
-docker-compose.override.yml
-
 README.md
 LICENSE
 
