@@ -2,7 +2,7 @@
 
 A REST API for tracking product inventory, suppliers, categories, and stock movements — built with ASP.NET Core Minimal APIs using a vertical-slice architecture.
 
-> This README covers the API (`src/InventoryManagement.Api`). The repo also contains `src/InventoryManagement.Client`, a SvelteKit frontend that consumes this API — see the note under [Getting Started](#getting-started) for running it alongside the API.
+> This README covers the API (`src/InventoryManagement.Api`).
 
 ## Tech Stack
 
@@ -114,14 +114,6 @@ dotnet run
 By default the API listens on `http://localhost:5005` (see `Properties/launchSettings.json`). In development mode, an interactive API reference is available at `/scalar`.
 
 ### Running the client alongside the API
-
-The API's CORS policy currently only allows requests from `http://localhost:5173`, which is the default Vite dev server port for `InventoryManagement.Client`. If you're running the SvelteKit client locally:
-
-```bash
-cd src/InventoryManagement.Client
-npm install
-npm run dev
-```
 
 If you deploy the API or run the client on a different origin, update the CORS policy in `Program.cs` accordingly.
 
