@@ -19,6 +19,7 @@ public static class CreateTransaction
                     CreateTransactionRequest request,
                     IValidator<CreateTransactionRequest> validator,
                     AppDbContext db,
+                    ILogger<Program> logger,
                     CancellationToken cancellationToken
                 ) =>
                 {
@@ -106,6 +107,12 @@ public static class CreateTransaction
                             "This product was updated by another request. Please retry with the latest data."
                         );
                     }
+
+                    logger.LogInformation(
+                        "Transaction created for {ProductID} with transaction ID {TransactionId}",
+                        transaction.ProductId,
+                        transaction.Id
+                    );
 
                     return Results.CreatedAtRoute(
                         TransactionsEndpointsNames.GetTransaction,

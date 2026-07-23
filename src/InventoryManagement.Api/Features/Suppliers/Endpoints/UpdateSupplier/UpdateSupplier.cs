@@ -16,6 +16,7 @@ public static class UpdateSupplier
                     UpdateSupplierRequest request,
                     IValidator<UpdateSupplierRequest> validator,
                     AppDbContext db,
+                    ILogger<Program> logger,
                     CancellationToken cancellationToken
                 ) =>
                 {
@@ -54,6 +55,11 @@ public static class UpdateSupplier
                     existingSupplier.Address = request.Address;
 
                     await db.SaveChangesAsync(cancellationToken);
+
+                    logger.LogInformation(
+                        "Supplier updated for ID {SupplierId}",
+                        existingSupplier.Id
+                    );
 
                     return Results.NoContent();
                 }

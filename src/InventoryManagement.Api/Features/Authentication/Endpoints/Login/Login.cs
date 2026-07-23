@@ -18,6 +18,7 @@ public static class Login
                     IValidator<LoginRequest> validator,
                     IJwtService jwtService,
                     AppDbContext db,
+                    ILogger<Program> logger,
                     CancellationToken cancellationToken
                 ) =>
                 {
@@ -62,6 +63,12 @@ public static class Login
                     }
 
                     var token = jwtService.GenerateToken(user);
+
+                    logger.LogInformation(
+                        "User Log in {Username} with ID {UserId}",
+                        user.Username,
+                        user.Id
+                    );
 
                     return Results.Ok(
                         new LoginResponse(user.Username, token, jwtService.ExpiresAt)

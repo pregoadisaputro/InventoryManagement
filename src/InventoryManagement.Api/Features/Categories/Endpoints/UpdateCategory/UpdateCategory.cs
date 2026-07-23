@@ -16,6 +16,7 @@ public static class UpdateCategory
                     UpdateCategoryRequest request,
                     IValidator<UpdateCategoryRequest> validator,
                     AppDbContext db,
+                    ILogger<Program> logger,
                     CancellationToken cancellationToken
                 ) =>
                 {
@@ -51,6 +52,11 @@ public static class UpdateCategory
                     existingCategory.Name = request.Name;
 
                     await db.SaveChangesAsync(cancellationToken);
+
+                    logger.LogInformation(
+                        "Category updated with ID {CategoryId}",
+                        existingCategory.Id
+                    );
 
                     return Results.NoContent();
                 }

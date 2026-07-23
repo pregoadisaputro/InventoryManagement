@@ -17,6 +17,7 @@ public static class CreateCategory
                     CreateCategoryRequest request,
                     IValidator<CreateCategoryRequest> validator,
                     AppDbContext db,
+                    ILogger<Program> logger,
                     CancellationToken cancellationToken
                 ) =>
                 {
@@ -43,6 +44,12 @@ public static class CreateCategory
 
                     db.Categories.Add(newCategory);
                     await db.SaveChangesAsync(cancellationToken);
+
+                    logger.LogInformation(
+                        "Category created {CategoryName} with ID {CategoryId}",
+                        newCategory.Name,
+                        newCategory.Id
+                    );
 
                     return Results.CreatedAtRoute(
                         CategoryEndpointNames.GetCategory,

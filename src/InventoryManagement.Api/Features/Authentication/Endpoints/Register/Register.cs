@@ -17,6 +17,7 @@ public static class Register
                     RegisterRequest request,
                     AppDbContext db,
                     IValidator<RegisterRequest> valdiator,
+                    ILogger<Program> logger,
                     CancellationToken cancellationToken
                 ) =>
                 {
@@ -52,6 +53,12 @@ public static class Register
 
                     db.Users.Add(newUser);
                     await db.SaveChangesAsync(cancellationToken);
+
+                    logger.LogInformation(
+                        "User created {Username} with ID {UserId}",
+                        newUser.Username,
+                        newUser.Id
+                    );
 
                     return Results.CreatedAtRoute(
                         UserEndpointsNames.GetUser,

@@ -16,6 +16,7 @@ public static class UpdateProduct
                     UpdateProductRequest request,
                     IValidator<UpdateProductRequest> validator,
                     AppDbContext db,
+                    ILogger<Program> logger,
                     CancellationToken cancellationToken
                 ) =>
                 {
@@ -98,6 +99,11 @@ public static class UpdateProduct
                     existingProduct.UpdatedAt = DateTimeOffset.UtcNow;
 
                     await db.SaveChangesAsync(cancellationToken);
+
+                    logger.LogInformation(
+                        "Updated product with ID {ProductId}",
+                        existingProduct.Id
+                    );
 
                     return Results.NoContent();
                 }

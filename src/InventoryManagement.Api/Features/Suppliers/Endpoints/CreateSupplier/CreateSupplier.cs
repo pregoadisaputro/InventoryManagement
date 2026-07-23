@@ -17,6 +17,7 @@ public static class CreateSupplier
                     CreateSupplierRequest request,
                     IValidator<CreateSupplierRequest> validator,
                     AppDbContext db,
+                    ILogger<Program> logger,
                     CancellationToken cancellationToken
                 ) =>
                 {
@@ -51,6 +52,12 @@ public static class CreateSupplier
 
                     db.Suppliers.Add(newSupplier);
                     await db.SaveChangesAsync(cancellationToken);
+
+                    logger.LogInformation(
+                        "Supplier created {SupplierName} with ID {SupplierId}",
+                        newSupplier.Name,
+                        newSupplier.Id
+                    );
 
                     return Results.CreatedAtRoute(
                         SupplierEndpointNames.GetSupplier,

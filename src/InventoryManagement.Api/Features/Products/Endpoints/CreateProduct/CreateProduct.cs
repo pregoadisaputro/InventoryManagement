@@ -17,6 +17,7 @@ public static class CreateProduct
                     CreateProductRequest request,
                     IValidator<CreateProductRequest> validator,
                     AppDbContext db,
+                    ILogger<Program> logger,
                     CancellationToken cancellationToken
                 ) =>
                 {
@@ -87,6 +88,12 @@ public static class CreateProduct
 
                     db.Products.Add(newProduct);
                     await db.SaveChangesAsync(cancellationToken);
+
+                    logger.LogInformation(
+                        "Created product {ProductName} with price {ProductPrice}",
+                        newProduct.Name,
+                        newProduct.Price
+                    );
 
                     return Results.CreatedAtRoute(
                         ProductEndpointNames.GetProduct,
