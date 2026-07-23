@@ -19,6 +19,9 @@ using Scalar.AspNetCore;
 
 var builder = WebApplication.CreateBuilder(args);
 
+var port = Environment.GetEnvironmentVariable("PORT") ?? "8080";
+builder.WebHost.UseUrls($"http://0.0.0.0:{port}");
+
 builder.Services.AddProblemDetails().AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddValidatorsFromAssemblyContaining<Program>();
 
@@ -64,7 +67,7 @@ builder.Services.AddCors(options =>
         "Client",
         policy =>
         {
-            policy.WithOrigins("http://localhost:5173").AllowAnyHeader().AllowAnyMethod();
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
         }
     );
 });
@@ -76,11 +79,6 @@ app.MapScalarApiReference(options =>
 {
     options.WithTitle("Freego Inventory Management");
 });
-
-if (!app.Environment.IsProduction())
-{
-    app.UseHttpsRedirection();
-}
 
 await app.MigrateDatabaseAsync();
 app.UseExceptionHandler();
