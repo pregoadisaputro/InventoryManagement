@@ -93,6 +93,14 @@ app.UseCors("Client");
 app.UseAuthentication();
 app.UseAuthorization();
 
+app.MapGet(
+    "/",
+    () =>
+    {
+        return Results.Ok(new { Name = "Inventory Management API", Version = "1.0" });
+    }
+);
+
 app.MapAuthentication();
 app.MapUsers();
 app.MapDashboard();
